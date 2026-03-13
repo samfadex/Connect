@@ -9,7 +9,7 @@ function ListGroup({ names, title, onSelected }: groupProps) {
     const [selectedRow, highlightMember] = useState(-1);
 
     return (
-        <div className="mx-2">
+        <div className="mx-5">
             <h1>{title}</h1>
             <ul className="list-group">
                 {names.map((name, index) => <li
