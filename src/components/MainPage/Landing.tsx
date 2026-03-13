@@ -3,12 +3,13 @@ import Title from "../Title";
 import Notification from "../Notification";
 
 const navigationItems = [
-    { label: "Home" },
-    { label: "Posts" },
-    { label: "Messages", badge: "99+" },
-    { label: "General Chat", badge: "5" },
-    { label: "Profile" },
-    { label: "Notifications", badge: "5" },
+    { label: "Home", href: "#home", active: true },
+    { label: "Posts", href: "#" },
+    { label: "Messages", href: "#messages", badge: "99+" },
+    { label: "Marketplace", href: "#marketplace" },
+    { label: "General Chat", href: "#", badge: "5" },
+    { label: "Profile", href: "#" },
+    { label: "Notifications", href: "#", badge: "5" },
 ];
 
 const faculties = [
@@ -86,7 +87,11 @@ function Landing() {
                     <nav className="king-navbar" aria-label="Primary">
                         <div className="king-navbar__links">
                             {navigationItems.map((item) => (
-                                <a key={item.label} className="king-nav-link" href="#">
+                                <a
+                                    key={item.label}
+                                    className={`king-nav-link${item.active ? " king-nav-link--active" : ""}`}
+                                    href={item.href}
+                                >
                                     <span>{item.label}</span>
                                     {item.badge ? <span className="badge bg-warning text-dark">{item.badge}</span> : null}
                                 </a>
