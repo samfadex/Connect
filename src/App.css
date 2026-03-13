@@ -45,6 +45,14 @@ body,
   margin-bottom: 1rem;
 }
 
+.king-topbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
 .king-header__brand {
   display: flex;
   align-items: center;
@@ -227,6 +235,28 @@ body,
   text-decoration: none;
 }
 
+.king-auth-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+  border: 1px solid rgba(0, 43, 92, 0.12);
+}
+
+.king-auth-link--primary {
+  background: var(--king-gold);
+  color: var(--king-red-deep);
+  box-shadow: 0 10px 18px rgba(255, 203, 5, 0.18);
+}
+
+.king-auth-link--secondary {
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--king-red-deep);
+}
+
 .king-mode-toggle {
   padding: 0.8rem 1.05rem;
   background: var(--king-gold);
@@ -260,6 +290,10 @@ body,
   max-width: 640px;
 }
 
+.king-message-hero .king-title {
+  margin-bottom: 0.45rem;
+}
+
 .king-message-hero__stats {
   display: grid;
   grid-template-columns: repeat(3, minmax(110px, 1fr));
@@ -288,7 +322,7 @@ body,
 .king-messages-layout {
   display: grid;
   grid-template-columns: minmax(280px, 0.95fr) minmax(0, 1.6fr) minmax(260px, 0.9fr);
-  gap: 1rem;
+  gap: 1.3rem;
   align-items: start;
 }
 
@@ -334,7 +368,7 @@ body,
 }
 
 .king-message-list__items {
-  padding: 0.7rem;
+  padding: 0.9rem;
 }
 
 .king-thread-card {
@@ -343,7 +377,7 @@ body,
   grid-template-columns: auto 1fr auto;
   gap: 0.9rem;
   align-items: start;
-  padding: 0.95rem;
+  padding: 1.1rem;
   border: none;
   border-radius: 18px;
   background: transparent;
@@ -425,7 +459,7 @@ body,
 }
 
 .king-chat-panel {
-  gap: 1.2rem;
+  gap: 1.45rem;
 }
 
 .king-chat-panel__header {
@@ -443,8 +477,8 @@ body,
 
 .king-chat-panel__messages {
   display: grid;
-  gap: 0.85rem;
-  min-height: 360px;
+  gap: 1rem;
+  min-height: 420px;
 }
 
 .king-chat-bubble {
@@ -479,15 +513,48 @@ body,
 }
 
 .king-chat-panel__composer {
-  padding: 1.1rem;
+  padding: 0.6rem 0.65rem;
+}
+
+.king-chat-panel__composer .form-label {
+  margin-bottom: 0.15rem;
+  font-size: 0.9rem;
+}
+
+.king-chat-panel__composer-input {
+  position: relative;
+}
+
+.king-chat-panel__composer .form-control {
+  min-height: 2.5rem;
+  padding: 0.55rem 6.7rem 0.55rem 0.65rem;
+  font-size: 0.92rem;
+  line-height: 1.35;
+  border-radius: 18px;
+}
+
+.king-chat-panel__send {
+  position: absolute;
+  top: 50%;
+  right: 0.35rem;
+  transform: translateY(-50%);
+  padding: 0.3rem 0.65rem;
+  font-size: 0.76rem;
+  line-height: 1;
+  border-radius: 999px;
+  box-shadow: none;
 }
 
 .king-chat-panel__composer-actions {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-top: 0.85rem;
+  justify-content: flex-end;
+  margin-top: 0.3rem;
+}
+
+.king-search--compact {
+  width: min(250px, 100%);
+  padding: 0.7rem 0.9rem;
 }
 
 .king-message-info__copy {
@@ -617,6 +684,32 @@ body,
 .king-market-card__body {
   display: grid;
   gap: 0.55rem;
+}
+
+.king-market-card__category {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.king-market-card__category .king-side-panel__label {
+  margin: 0;
+}
+
+.king-market-card__icon {
+  width: 2.4rem;
+  height: 2.4rem;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: rgba(255, 203, 5, 0.22);
+  color: var(--king-red-deep);
+  flex-shrink: 0;
+}
+
+.king-market-card__icon svg {
+  width: 1.35rem;
+  height: 1.35rem;
 }
 
 .king-market-card__body p {
@@ -1017,6 +1110,20 @@ body,
   border-color: rgba(255, 255, 255, 0.16);
 }
 
+.dark-mode .king-auth-link {
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.dark-mode .king-auth-link--secondary {
+  background: rgba(255, 255, 255, 0.08);
+  color: #edf5ff;
+}
+
+.dark-mode .king-auth-link--primary {
+  background: var(--king-gold);
+  color: var(--king-red-deep);
+}
+
 .dark-mode .king-search {
   background: rgba(255, 255, 255, 0.08);
   color: #edf5ff;
@@ -1216,6 +1323,11 @@ body,
 .dark-mode .king-market-filter--active {
   background: rgba(255, 255, 255, 0.08);
   color: #edf5ff;
+}
+
+.dark-mode .king-market-card__icon {
+  background: rgba(255, 203, 5, 0.18);
+  color: var(--king-gold);
 }
 
 .dark-mode .king-market-filter {

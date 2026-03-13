@@ -1,13 +1,16 @@
 import { useMemo, useState } from "react";
+import type { ReactNode } from "react";
 import Notification from "../Notification";
 import Title from "../Title";
 
 type MarketplaceCategory = "Textbooks" | "Shoes" | "Clothing";
+type ListingIcon = "textbook" | "running-shoe" | "hoodie" | "workbook" | "boots" | "jacket";
 
 interface Listing {
     id: number;
     title: string;
     category: MarketplaceCategory;
+    icon: ListingIcon;
     price: string;
     seller: string;
     condition: string;
@@ -31,6 +34,7 @@ const marketplaceListings: Listing[] = [
         id: 1,
         title: "Biology 201 Textbook",
         category: "Textbooks",
+        icon: "textbook",
         price: "$45",
         seller: "Ava T.",
         condition: "Lightly used",
@@ -42,6 +46,7 @@ const marketplaceListings: Listing[] = [
         id: 2,
         title: "Nike Running Shoes",
         category: "Shoes",
+        icon: "running-shoe",
         price: "$35",
         seller: "Jordan L.",
         condition: "Good condition",
@@ -53,6 +58,7 @@ const marketplaceListings: Listing[] = [
         id: 3,
         title: "King's Hoodie",
         category: "Clothing",
+        icon: "hoodie",
         price: "$25",
         seller: "Maya C.",
         condition: "Like new",
@@ -64,6 +70,7 @@ const marketplaceListings: Listing[] = [
         id: 4,
         title: "Calculus Workbook",
         category: "Textbooks",
+        icon: "workbook",
         price: "$20",
         seller: "Noah B.",
         condition: "Used",
@@ -75,6 +82,7 @@ const marketplaceListings: Listing[] = [
         id: 5,
         title: "Brown Chelsea Boots",
         category: "Shoes",
+        icon: "boots",
         price: "$40",
         seller: "Grace P.",
         condition: "Very good",
@@ -86,6 +94,7 @@ const marketplaceListings: Listing[] = [
         id: 6,
         title: "Winter Jacket",
         category: "Clothing",
+        icon: "jacket",
         price: "$60",
         seller: "Daniel K.",
         condition: "Excellent",
@@ -102,6 +111,71 @@ const spotlightTips = [
     "Add course codes to textbook listings so classmates can find the right edition faster.",
     "Use Messages to confirm pick-up times before heading across campus.",
 ];
+
+function ListingIcon({ icon }: { icon: ListingIcon }): ReactNode {
+    const commonProps = {
+        viewBox: "0 0 24 24",
+        fill: "none",
+        stroke: "currentColor",
+        strokeWidth: 1.8,
+        strokeLinecap: "round" as const,
+        strokeLinejoin: "round" as const,
+        "aria-hidden": true,
+    };
+
+    switch (icon) {
+        case "textbook":
+            return (
+                <svg {...commonProps}>
+                    <path d="M6 4.5A2.5 2.5 0 0 1 8.5 2H19v18H8.5A2.5 2.5 0 0 0 6 22Z" />
+                    <path d="M6 4.5V22H5a2 2 0 0 1-2-2V6.5a2 2 0 0 1 2-2Z" />
+                    <path d="M10 7h5" />
+                    <path d="M10 11h6" />
+                </svg>
+            );
+        case "running-shoe":
+            return (
+                <svg {...commonProps}>
+                    <path d="M4 15c2.3 0 3.8-.6 5.2-2.2l1.8-2.1 2 2.3c1.2 1.4 2.7 2 5 2H21v3H4a2 2 0 0 1 0-4Z" />
+                    <path d="M10 8 8.8 5.8" />
+                    <path d="M13 10 11.6 8" />
+                    <path d="M16 12 14.5 9.8" />
+                </svg>
+            );
+        case "hoodie":
+            return (
+                <svg {...commonProps}>
+                    <path d="M9 5a3 3 0 0 1 6 0l2.6 1.7-1.1 3.8-1.5-.8V20H9V9.7l-1.5.8-1.1-3.8Z" />
+                    <path d="M10 5.5c.6.7 1.2 1 2 1s1.4-.3 2-1" />
+                    <path d="M12 10v3" />
+                </svg>
+            );
+        case "workbook":
+            return (
+                <svg {...commonProps}>
+                    <path d="M7 3h10a2 2 0 0 1 2 2v14H7a2 2 0 0 0-2 2V5a2 2 0 0 1 2-2Z" />
+                    <path d="M9 8h6" />
+                    <path d="M9 12h4" />
+                    <path d="m14 16 1.2 1.2L18 14.4" />
+                </svg>
+            );
+        case "boots":
+            return (
+                <svg {...commonProps}>
+                    <path d="M8 4v7.5c0 1.2.5 2.3 1.4 3.1l2.1 1.9H19a2 2 0 0 1 0 4H9.5a5.5 5.5 0 0 1-3.9-1.6L4 17.3V4Z" />
+                    <path d="M8 8h3" />
+                </svg>
+            );
+        case "jacket":
+            return (
+                <svg {...commonProps}>
+                    <path d="M9.5 3 7 5.2 5 9v11h4v-6h6v6h4V9l-2-3.8L14.5 3 12 5Z" />
+                    <path d="M12 5v9" />
+                    <path d="M9 9h6" />
+                </svg>
+            );
+    }
+}
 
 function MarketPlace() {
     const [selectedCategory, setSelectedCategory] = useState<MarketplaceCategory | "All">("All");
@@ -233,7 +307,12 @@ function MarketPlace() {
                                         <span className="king-market-card__price">{listing.price}</span>
                                     </div>
                                     <div className="king-market-card__body">
-                                        <p className="king-side-panel__label">{listing.category}</p>
+                                        <div className="king-market-card__category">
+                                            <span className="king-market-card__icon" aria-hidden="true">
+                                                <ListingIcon icon={listing.icon} />
+                                            </span>
+                                            <p className="king-side-panel__label">{listing.category}</p>
+                                        </div>
                                         <h3>{listing.title}</h3>
                                         <p>{listing.description}</p>
                                     </div>

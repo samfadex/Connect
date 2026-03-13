@@ -195,7 +195,7 @@ function Messages() {
                         </div>
 
                         <div className="king-navbar__actions">
-                            <input className="king-search" placeholder="Search conversations or classmates" />
+                            <input className="king-search king-search--compact" placeholder="Search conversations or classmates" />
                         </div>
                     </nav>
                 </div>
@@ -294,20 +294,22 @@ function Messages() {
 
                         <div className="king-chat-panel__composer">
                             <label className="form-label" htmlFor="messageDraft">Reply</label>
-                            <textarea
-                                id="messageDraft"
-                                className="form-control"
-                                rows={3}
-                                value={draft}
-                                onChange={(event) => setDraft(event.target.value)}
-                                onKeyDown={handleDraftKeyDown}
-                                placeholder={`Message ${activeConversation.name}`}
-                            />
-                            <div className="king-chat-panel__composer-actions">
-                                <span>{draft.length}/240 characters</span>
-                                <button type="button" className="king-cta king-cta--primary" onClick={handleSend}>
+                            <div className="king-chat-panel__composer-input">
+                                <textarea
+                                    id="messageDraft"
+                                    className="form-control"
+                                    rows={1}
+                                    value={draft}
+                                    onChange={(event) => setDraft(event.target.value)}
+                                    onKeyDown={handleDraftKeyDown}
+                                    placeholder={`Message ${activeConversation.name}`}
+                                />
+                                <button type="button" className="king-cta king-cta--primary king-chat-panel__send" onClick={handleSend}>
                                     Send message
                                 </button>
+                            </div>
+                            <div className="king-chat-panel__composer-actions">
+                                <span>{draft.length}/240 characters</span>
                             </div>
                         </div>
                     </section>

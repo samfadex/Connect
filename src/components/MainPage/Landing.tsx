@@ -70,18 +70,22 @@ function Landing() {
                             </div>
                         </div>
 
-                        <button
-                            className="king-mode-toggle"
-                            id="darkModeToggle"
-                            type="button"
-                            aria-label="Toggle dark mode"
-                            onClick={() => {
-                                document.body.classList.toggle("dark-mode");
-                                localStorage.setItem("darkMode", document.body.classList.contains("dark-mode") ? "true" : "false");
-                            }}
-                        >
-                            Switch Theme
-                        </button>
+                        <div className="king-topbar__actions">
+                            <a className="king-auth-link king-auth-link--secondary" href="#login">Log in</a>
+                            <a className="king-auth-link king-auth-link--primary" href="#signup">Sign up</a>
+                            <button
+                                className="king-mode-toggle"
+                                id="darkModeToggle"
+                                type="button"
+                                aria-label="Toggle dark mode"
+                                onClick={() => {
+                                    document.body.classList.toggle("dark-mode");
+                                    localStorage.setItem("darkMode", document.body.classList.contains("dark-mode") ? "true" : "false");
+                                }}
+                            >
+                                Switch Theme
+                            </button>
+                        </div>
                     </div>
 
                     <nav className="king-navbar" aria-label="Primary">
