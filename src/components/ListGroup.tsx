@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Title from "./Title";
 interface groupProps {
     names: string[];
     title: string;
@@ -9,8 +10,8 @@ function ListGroup({ names, title, onSelected }: groupProps) {
     const [selectedRow, highlightMember] = useState(-1);
 
     return (
-        <div className="mx-5">
-            <h1>{title}</h1>
+        <div className="text-primary">
+            <Title title={title} />
             <ul className="list-group">
                 {names.map((name, index) => <li
                     key={name}

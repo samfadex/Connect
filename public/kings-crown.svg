@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 120" role="img" aria-labelledby="title desc">
+  <title id="title">The King's University logo</title>
+  <desc id="desc">A stylized turquoise crown inspired by The King's University wordmark.</desc>
+  <defs>
+    <linearGradient id="teal-a" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#73d8ef" />
+      <stop offset="100%" stop-color="#34b9df" />
+    </linearGradient>
+    <linearGradient id="teal-b" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#56cde8" />
+      <stop offset="100%" stop-color="#1f9fd0" />
+    </linearGradient>
+    <linearGradient id="teal-c" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#8be2f1" />
+      <stop offset="100%" stop-color="#49bfdd" />
+    </linearGradient>
+    <linearGradient id="teal-d" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#3db7d9" />
+      <stop offset="100%" stop-color="#158ebf" />
+    </linearGradient>
+  </defs>
+  <rect width="180" height="120" fill="none" />
+  <g transform="translate(10 20)">
+    <polygon points="0,62 40,20 50,62" fill="url(#teal-c)" />
+    <polygon points="40,20 54,0 72,24 50,62" fill="url(#teal-b)" />
+    <polygon points="72,24 108,10 96,62 50,62" fill="url(#teal-d)" />
+    <polygon points="0,62 22,34 50,62" fill="url(#teal-a)" opacity="0.95" />
+    <polygon points="50,62 72,24 96,62" fill="#2aaed4" opacity="0.9" />
+    <rect x="14" y="70" width="58" height="10" fill="#4fc4de" />
+  </g>
+</svg>

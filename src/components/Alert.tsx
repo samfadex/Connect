@@ -6,7 +6,7 @@ interface message {
 }
 
 function Alert({ children, color = "primary" }: message) {
-    return <div className={'mx-2 text-center fw-bold fs-2 alert alert-' + color}>{children}</div>
+    return <div className={'mx-2 text-center fw-bold fs-4 alert alert-' + color}>{children}</div>
 }
 
 export default Alert;
