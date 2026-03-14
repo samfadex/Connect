@@ -13,9 +13,10 @@ type DiscussionPost = {
 const pendingGroupChatKey = "connect:pendingGroupChat";
 
 const navigationItems = [
-    { label: "Home", href: "#home", active: true },
-    { label: "Posts", href: "#posts", badge: "5" },
+    { label: "Home", href: "#home" },
+    { label: "Posts", href: "#posts", badge: "5", active: true },
     { label: "Chat", href: "#messages", badge: "12" },
+    { label: "Group Forum", href: "#group-chat" },
     { label: "Marketplace", href: "#marketplace" },
 ];
 

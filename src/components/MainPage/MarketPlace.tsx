@@ -2,9 +2,8 @@ import { useMemo, useState } from "react";
 import type { ReactNode } from "react";
 import Notification from "../Notification";
 import Title from "../Title";
-import ConnectLogo from "../ConnectLogo";
-import NotificationCenter from "./NotificationCenter";
 import SiteFooter from "./SiteFooter";
+import SharedPageHeader from "./SharedPageHeader";
 
 const bookImageUrl = new URL("../../assets/images/book.png", import.meta.url).toString();
 const hoodieImageUrl = new URL("../../assets/images/hoodie.png", import.meta.url).toString();
@@ -43,8 +42,8 @@ interface Listing {
 const navigationItems = [
     { label: "Home", href: "#home" },
     { label: "Posts", href: "#posts", badge: "5" },
-    { label: "Course Forum", href: "#" },
     { label: "Chat", href: "#messages", badge: "12" },
+    { label: "Group Forum", href: "#group-chat" },
     { label: "Marketplace", href: "#marketplace", active: true },
 ];
 
@@ -237,69 +236,14 @@ function MarketPlace() {
 
     return (
         <div className="king-theme">
-            <header className="king-header">
-                <div className="king-shell">
-                    <div className="king-topbar">
-                        <div className="king-header__brand">
-                            <ConnectLogo className="connect-login-brand--header" eyebrow="Campus Network" name="CONNECT" />
-                        </div>
-                        <div className="king-profile-chip" role="button" tabIndex={0} aria-label="Open profile">
-                            <span className="king-profile-chip__icon" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                                    <path d="M20 21a8 8 0 0 0-16 0" />
-                                    <circle cx="12" cy="8" r="4" />
-                                </svg>
-                            </span>
-                            <span className="king-profile-chip__copy">
-                                <strong>Dayana Mon Jerry</strong>
-                                <small>Student</small>
-                            </span>
-                        </div>
-                    </div>
-
-                    <nav className="king-navbar" aria-label="Primary">
-                        <div className="king-navbar__links">
-                            {navigationItems.map((item) => (
-                                // Render badges as a corner badge for consistency with Chat.
-                                <a
-                                    key={item.label}
-                                    className={`king-nav-link${item.active ? " king-nav-link--active" : ""}${item.badge ? " position-relative" : ""}`}
-                                    href={item.href}
-                                >
-                                    <span>{item.label}</span>
-                                    {item.badge ? (
-                                        <span
-                                            className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark"
-                                            style={{ fontSize: "0.7rem" }}
-                                        >
-                                            {item.badge}
-                                        </span>
-                                    ) : null}
-                                </a>
-                            ))}
-
-                            <NotificationCenter unreadCount={3} />
-
-                            <details className="king-nav-dropdown">
-                                <summary className="king-nav-link king-nav-dropdown__toggle">
-                                    <span>More</span>
-                                </summary>
-                                <div className="king-nav-dropdown__menu">
-                                    {moreItems.map((item) => (
-                                        <a key={item.label} className="king-nav-dropdown__item" href={item.href}>
-                                            {item.label}
-                                        </a>
-                                    ))}
-                                </div>
-                            </details>
-                        </div>
-
-                        <div className="king-navbar__actions">
-                            <input className="king-search" placeholder="Search listings, brands, or course codes" />
-                        </div>
-                    </nav>
-                </div>
-            </header>
+            <SharedPageHeader
+                navigationItems={navigationItems}
+                profileName="Sarah Kim"
+                profileStatus="Student"
+                searchPlaceholder="Search listings, brands, or course codes"
+                notificationCount={3}
+                moreItems={moreItems}
+            />
 
             <main className="king-main king-shell">
                 <section className="king-market-hero">

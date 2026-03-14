@@ -177,7 +177,8 @@ function GroupChat() {
     const navigationItems = [
         { label: "Home", href: "#home" },
         { label: "Posts", href: "#posts", badge: "5" },
-        { label: "Chat", href: "#group-chat", active: true },
+        { label: "Chat", href: "#messages", badge: "12" },
+        { label: "Group Forum", href: "#group-chat", active: true },
         { label: "Marketplace", href: "#marketplace" },
     ];
 
@@ -353,4 +354,3 @@ function GroupChat() {
 }
 
 export default GroupChat;
-
