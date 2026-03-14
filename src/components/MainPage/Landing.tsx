@@ -22,7 +22,6 @@ const navigationItems = [
     { label: "Home", href: "#home", active: true },
     { label: "Posts", href: "#posts", badge: "5" },
     { label: "Chat", href: "#messages", badge: "12" },
-    { label: "Group Forum", href: "#group-chat" },
     { label: "Marketplace", href: "#marketplace" },
 ];
 

@@ -231,14 +231,8 @@ function GroupChat() {
 
     const navigationItems = [
         { label: "Home", href: "#home" },
-<<<<<<< HEAD
-        { label: "Posts", href: "#posts", badge: "5" },
-        { label: "Chat", href: "#messages", badge: "12" },
-        { label: "Group Forum", href: "#group-chat", active: true },
-=======
         { label: "Posts", href: "#posts", badge: "5", active: true },
         { label: "Chat", href: "#messages", badge: "12" },
->>>>>>> 341059f (dksfsdjk)
         { label: "Marketplace", href: "#marketplace" },
     ];
 

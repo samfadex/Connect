@@ -31,7 +31,6 @@ const navigationItems = [
     { label: "Home", href: "#home" },
     { label: "Posts", href: "#posts", badge: "5" },
     { label: "Chat", href: "#messages", active: true },
-    { label: "Group Forum", href: "#group-chat" },
     { label: "Marketplace", href: "#marketplace" },
 ];
 
