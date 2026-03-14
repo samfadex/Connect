@@ -21,8 +21,17 @@ type SharedPageHeaderProps = {
     searchPlaceholder: string;
     notificationCount: string | number;
     searchClassName?: string;
+    faculties?: DropdownItem[];
     moreItems?: DropdownItem[];
 };
+
+const defaultFaculties: DropdownItem[] = [
+    { label: "Arts", href: "#faculties" },
+    { label: "Science", href: "#faculties" },
+    { label: "Business", href: "#faculties" },
+    { label: "Education", href: "#faculties" },
+    { label: "Music", href: "#faculties" },
+];
 
 const defaultMoreItems: DropdownItem[] = [
     { label: "About", href: "#" },
@@ -40,6 +49,7 @@ function SharedPageHeader({
     searchPlaceholder,
     notificationCount,
     searchClassName,
+    faculties = defaultFaculties,
     moreItems = defaultMoreItems,
 }: SharedPageHeaderProps) {
     const navRef = useRef<HTMLElement | null>(null);
@@ -149,48 +159,6 @@ function SharedPageHeader({
                         </div>
                     </nav>
                 </div>
-<<<<<<< HEAD
-
-                <nav ref={navRef} className="king-navbar" aria-label="Primary">
-                    <div className="king-navbar__links">
-                        {navigationItems.map((item) => (
-                            <a
-                                key={item.label}
-                                className={`king-nav-link${item.active ? " king-nav-link--active" : ""}${item.badge ? " king-nav-link--with-badge" : ""}${item.label === "Posts" ? " king-nav-link--badge-near" : ""}`}
-                                href={item.href}
-                                onClick={closeDropdowns}
-                            >
-                                <span>{item.label}</span>
-                                {item.badge ? (
-                                    <span className="king-nav-link__badge">
-                                        {item.badge}
-                                    </span>
-                                ) : null}
-                            </a>
-                        ))}
-
-                        <NotificationCenter unreadCount={notificationCount} />
-
-                        <details className="king-nav-dropdown">
-                            <summary className="king-nav-link king-nav-dropdown__toggle">
-                                <span>More</span>
-                            </summary>
-                            <div className="king-nav-dropdown__menu">
-                                {moreItems.map((item) => (
-                                    <a key={item.label} className="king-nav-dropdown__item" href={item.href} onClick={closeDropdowns}>
-                                        {item.label}
-                                    </a>
-                                ))}
-                            </div>
-                        </details>
-                    </div>
-
-                    <div className="king-navbar__actions">
-                        <input className={`king-search${searchClassName ? ` ${searchClassName}` : ""}`} placeholder={searchPlaceholder} />
-                    </div>
-                </nav>
-=======
->>>>>>> 96aa7a1 (sdjksjd)
             </div>
         </header>
     );
