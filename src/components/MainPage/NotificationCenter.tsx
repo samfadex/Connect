@@ -680,7 +680,7 @@ function NotificationCenter({ unreadCount, items = defaultNotifications }: Notif
         <>
             <button
                 type="button"
-                className={`king-nav-link${badgeCount ? " king-nav-link--with-badge" : ""}`}
+                className={`king-nav-link king-nav-link--notification${badgeCount ? " king-nav-link--with-badge" : ""}`}
                 aria-haspopup="dialog"
                 aria-controls={offcanvasId}
                 aria-expanded={isOpen}
