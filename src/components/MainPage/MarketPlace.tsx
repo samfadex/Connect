@@ -6,6 +6,22 @@ import ConnectLogo from "../ConnectLogo";
 import NotificationCenter from "./NotificationCenter";
 import SiteFooter from "./SiteFooter";
 
+const bookImageUrl = new URL("../../assets/images/book.png", import.meta.url).toString();
+const hoodieImageUrl = new URL("../../assets/images/hoodie.png", import.meta.url).toString();
+const phoneImageUrl = new URL("../../assets/images/phone.png", import.meta.url).toString();
+const laptopImageUrl = new URL("../../assets/images/asuslaptop.png", import.meta.url).toString();
+
+function getListingImage(category: MarketplaceCategory): { src: string; alt: string } {
+    switch (category) {
+        case "Textbooks":
+            return { src: bookImageUrl, alt: "Textbook listing" };
+        case "Clothing":
+            return { src: hoodieImageUrl, alt: "Clothing listing" };
+        case "Shoes":
+            return { src: phoneImageUrl, alt: "Shoes listing" };
+    }
+}
+
 type MarketplaceCategory = "Textbooks" | "Shoes" | "Clothing";
 type ListingIcon = "textbook" | "running-shoe" | "hoodie" | "workbook" | "boots" | "jacket";
 type ListingMode = "Buy" | "Share";
@@ -208,6 +224,16 @@ function MarketPlace() {
     const [selectedCategory, setSelectedCategory] = useState<MarketplaceCategory | "All">("All");
     const [selectedMode, setSelectedMode] = useState<ListingMode | "All">("All");
 
+    const scrollToMarketplace = () => {
+        if (typeof document === "undefined") return;
+        const target = document.getElementById("marketplace");
+        if (target) {
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+            return;
+        }
+        window.location.hash = "#marketplace";
+    };
+
     const filteredListings = useMemo(
         () => marketplaceListings.filter((listing) => {
             const matchesCategory = selectedCategory === "All" || listing.category === selectedCategory;
@@ -305,8 +331,39 @@ function MarketPlace() {
                             Find affordable textbooks, clean sneakers, and extra layers without leaving the King&apos;s community.
                         </p>
                         <div className="king-hero__actions">
-                            <a className="king-cta king-cta--primary" href="#messages">Message a seller</a>
-                            <a className="king-cta king-cta--secondary" href="#marketplace">Sell or donate</a>
+                            <button
+                                type="button"
+                                className="king-cta king-cta--primary"
+                                onClick={() => {
+                                    setSelectedCategory("All");
+                                    setSelectedMode("Buy");
+                                    scrollToMarketplace();
+                                }}
+                            >
+                                Buy
+                            </button>
+                            <button
+                                type="button"
+                                className="king-cta king-cta--secondary"
+                                onClick={() => {
+                                    setSelectedCategory("All");
+                                    setSelectedMode("All");
+                                    scrollToMarketplace();
+                                }}
+                            >
+                                Sell
+                            </button>
+                            <button
+                                type="button"
+                                className="king-cta king-cta--secondary"
+                                onClick={() => {
+                                    setSelectedCategory("All");
+                                    setSelectedMode("Share");
+                                    scrollToMarketplace();
+                                }}
+                            >
+                                Share
+                            </button>
                         </div>
                     </div>
 
@@ -326,55 +383,307 @@ function MarketPlace() {
                     </div>
                 </section>
 
-                <section className="king-market-layout">
-                    <aside className="king-market-sidebar">
-                        <div className="king-side-panel king-side-panel--soft">
-                            <p className="king-side-panel__label">Browse by type</p>
-                            <div className="king-market-filter-list">
-                                {listingModes.map((mode) => (
-                                    <button
-                                        key={mode}
-                                        type="button"
-                                        className={`king-market-filter${selectedMode === mode ? " king-market-filter--active" : ""}`}
-                                        onClick={() => setSelectedMode(mode)}
-                                    >
-                                        {mode}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
+                <section className="king-market-layout" id="marketplace" style={{ alignItems: "stretch" }}>
+                    <aside className="king-market-sidebar" style={{ display: "flex", flexDirection: "column" }}>
+                        <div
+                            className="king-side-panel king-side-panel--soft"
+                            style={{
+                                flex: 1,
+                                display: "flex",
+                                flexDirection: "column",
+                            }}
+                        >
+                            <div>
+                                <p className="king-side-panel__label">Browse by type</p>
+                                <div className="king-market-filter-list">
+                                    {listingModes.map((mode) => (
+                                        <button
+                                            key={mode}
+                                            type="button"
+                                            className={`king-market-filter${selectedMode === mode ? " king-market-filter--active" : ""}`}
+                                            onClick={() => setSelectedMode(mode)}
+                                        >
+                                            {mode}
+                                        </button>
+                                    ))}
+                                </div>
 
-                        <div className="king-side-panel king-side-panel--soft">
-                            <p className="king-side-panel__label">Browse by category</p>
-                            <div className="king-market-filter-list">
-                                {categoryFilters.map((category) => (
-                                    <button
-                                        key={category}
-                                        type="button"
-                                        className={`king-market-filter${selectedCategory === category ? " king-market-filter--active" : ""}`}
-                                        onClick={() => setSelectedCategory(category)}
-                                    >
-                                        {category}
-                                    </button>
-                                ))}
-                            </div>
-                        </div>
+                                <div style={{ height: "1px", background: "var(--king-border)", margin: "1.15rem 0" }} />
 
-                        <div className="king-side-panel">
-                            <p className="king-side-panel__label">Selling tips</p>
-                            <ul className="king-side-panel__list">
-                                {spotlightTips.map((tip) => (
-                                    <li key={tip}>{tip}</li>
-                                ))}
-                            </ul>
+                                <p className="king-side-panel__label">Browse by category</p>
+                                <div className="king-market-filter-list">
+                                    {categoryFilters.map((category) => (
+                                        <button
+                                            key={category}
+                                            type="button"
+                                            className={`king-market-filter${selectedCategory === category ? " king-market-filter--active" : ""}`}
+                                            onClick={() => setSelectedCategory(category)}
+                                        >
+                                            {category}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div
+                                style={{
+                                    flex: 1,
+                                    marginTop: "1.15rem",
+                                    borderRadius: "20px",
+                                    border: "1px solid rgba(0, 43, 92, 0.12)",
+                                    background:
+                                        "linear-gradient(135deg, rgba(250, 204, 21, 0.18) 0%, rgba(255, 255, 255, 0.92) 55%, rgba(96, 165, 250, 0.12) 100%)",
+                                    boxShadow: "0 14px 28px rgba(15, 23, 42, 0.08)",
+                                    padding: "1rem",
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent: "flex-start",
+                                    gap: "0.85rem",
+                                }}
+                            >
+                                <div>
+                                    <p className="king-side-panel__label" style={{ marginBottom: "0.35rem" }}>
+                                        Quick links
+                                    </p>
+                                    <p className="mb-0" style={{ color: "rgba(15, 23, 42, 0.72)" }}>
+                                        Jump to what students are grabbing most this week.
+                                    </p>
+                                </div>
+
+                                <div
+                                    style={{
+                                        display: "grid",
+                                        gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+                                        gap: "0.75rem",
+                                    }}
+                                >
+                                    {[
+                                        {
+                                            title: "Textbooks",
+                                            subtitle: "Course-ready deals",
+                                            image: bookImageUrl,
+                                            onClick: () => {
+                                                setSelectedCategory("Textbooks");
+                                                scrollToMarketplace();
+                                            },
+                                        },
+                                        {
+                                            title: "Clothing",
+                                            subtitle: "Layers for the season",
+                                            image: hoodieImageUrl,
+                                            onClick: () => {
+                                                setSelectedCategory("Clothing");
+                                                scrollToMarketplace();
+                                            },
+                                        },
+                                        {
+                                            title: "Buy",
+                                            subtitle: "Paid listings",
+                                            image: laptopImageUrl,
+                                            onClick: () => {
+                                                setSelectedCategory("All");
+                                                setSelectedMode("Buy");
+                                                scrollToMarketplace();
+                                            },
+                                        },
+                                        {
+                                            title: "Share",
+                                            subtitle: "Free community picks",
+                                            image: phoneImageUrl,
+                                            onClick: () => {
+                                                setSelectedCategory("All");
+                                                setSelectedMode("Share");
+                                                scrollToMarketplace();
+                                            },
+                                        },
+                                    ].map((card) => (
+                                        <button
+                                            key={card.title}
+                                            type="button"
+                                            className="btn p-0 text-start"
+                                            onClick={card.onClick}
+                                            style={{
+                                                borderRadius: "18px",
+                                                border: "1px solid rgba(250, 204, 21, 0.5)",
+                                                background: "rgba(255, 255, 255, 0.88)",
+                                                overflow: "hidden",
+                                                boxShadow: "0 12px 20px rgba(15, 23, 42, 0.08)",
+                                            }}
+                                        >
+                                            <div
+                                                style={{
+                                                    height: "128px",
+                                                    background: "rgba(250, 204, 21, 0.14)",
+                                                    display: "grid",
+                                                    placeItems: "center",
+                                                }}
+                                            >
+                                                <img
+                                                    src={card.image}
+                                                    alt={card.title}
+                                                    loading="lazy"
+                                                    style={{
+                                                        width: "100%",
+                                                        height: "100%",
+                                                        objectFit: "contain",
+                                                        display: "block",
+                                                        padding: "10px",
+                                                    }}
+                                                />
+                                            </div>
+                                            <div style={{ padding: "0.75rem 0.85rem" }}>
+                                                <div style={{ fontWeight: 900, letterSpacing: "-0.01em" }}>{card.title}</div>
+                                                <div style={{ color: "rgba(15, 23, 42, 0.7)", fontSize: "0.92rem" }}>
+                                                    {card.subtitle}
+                                                </div>
+                                            </div>
+                                        </button>
+                                    ))}
+                                </div>
+
+                                <div
+                                    style={{
+                                        borderRadius: "18px",
+                                        border: "1px dashed rgba(0, 43, 92, 0.18)",
+                                        background: "rgba(255, 255, 255, 0.78)",
+                                        padding: "0.9rem 0.95rem",
+                                    }}
+                                >
+                                    <p className="king-side-panel__label" style={{ marginBottom: "0.35rem" }}>
+                                        Reviews
+                                    </p>
+                                    <div className="d-flex align-items-center justify-content-between gap-2">
+                                        <div style={{ fontWeight: 900, color: "rgba(15, 23, 42, 0.92)" }}>Trusted swaps</div>
+                                        <span
+                                            className="badge bg-warning text-dark"
+                                            style={{ borderRadius: "999px", letterSpacing: "0.06em" }}
+                                        >
+                                            4.9/5
+                                        </span>
+                                    </div>
+
+                                    {[
+                                        {
+                                            quote: "Fast pickup, friendly sellers, and real savings. Everything felt safe meeting on campus.",
+                                            initials: "SK",
+                                            name: "Sarah K.",
+                                        },
+                                        {
+                                            quote: "Found my textbook in 10 minutes and the seller met right after class. Super easy.",
+                                            initials: "JL",
+                                            name: "Jordan L.",
+                                        },
+                                        {
+                                            quote: "The Share items helped me through midterms. People were kind and quick to respond.",
+                                            initials: "MC",
+                                            name: "Maya C.",
+                                        },
+                                    ].map((review) => (
+                                        <div key={review.initials} style={{ marginTop: "0.75rem" }}>
+                                            <p className="mb-0" style={{ color: "rgba(15, 23, 42, 0.74)", lineHeight: 1.5 }}>
+                                                “{review.quote}”
+                                            </p>
+                                            <div className="d-flex align-items-center gap-2 mt-3">
+                                                <span
+                                                    aria-hidden="true"
+                                                    style={{
+                                                        width: "34px",
+                                                        height: "34px",
+                                                        borderRadius: "14px",
+                                                        display: "grid",
+                                                        placeItems: "center",
+                                                        background: "rgba(250, 204, 21, 0.28)",
+                                                        border: "1px solid rgba(250, 204, 21, 0.5)",
+                                                        fontWeight: 900,
+                                                        color: "rgba(15, 23, 42, 0.9)",
+                                                    }}
+                                                >
+                                                    {review.initials}
+                                                </span>
+                                                <div>
+                                                    <div style={{ fontWeight: 800, marginBottom: 0, color: "rgba(15, 23, 42, 0.92)" }}>
+                                                        {review.name}
+                                                    </div>
+                                                    <div style={{ fontSize: "0.9rem", color: "rgba(15, 23, 42, 0.7)" }}>
+                                                        Verified student
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div style={{ marginTop: "auto" }}>
+                                <div style={{ height: "1px", background: "var(--king-border)", margin: "1.15rem 0" }} />
+
+                                <p className="king-side-panel__label">Selling tips</p>
+                                <ul className="king-side-panel__list" style={{ marginBottom: 0 }}>
+                                    {spotlightTips.map((tip) => (
+                                        <li key={tip}>{tip}</li>
+                                    ))}
+                                </ul>
+                            </div>
                         </div>
                     </aside>
 
-                    <section className="king-market-main">
+                    <section className="king-market-main" style={{ height: "100%" }}>
                         <div className="king-market-toolbar">
-                            <div>
-                                <p className="king-side-panel__label">Available now</p>
-                                <h3>{filteredListings.length} items ready for pickup</h3>
+                            <div
+                                style={{
+                                    flex: "1 1 auto",
+                                    padding: "0.95rem 1rem",
+                                    borderRadius: "18px",
+                                    border: "1px solid var(--king-border)",
+                                    background:
+                                        "linear-gradient(135deg, rgba(250, 204, 21, 0.22) 0%, rgba(255, 255, 255, 0.92) 42%, rgba(96, 165, 250, 0.14) 100%)",
+                                    boxShadow: "var(--king-shadow)",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: "0.9rem",
+                                }}
+                            >
+                                <div
+                                    aria-hidden="true"
+                                    style={{
+                                        width: "46px",
+                                        height: "46px",
+                                        borderRadius: "16px",
+                                        display: "grid",
+                                        placeItems: "center",
+                                        background: "rgba(250, 204, 21, 0.35)",
+                                        border: "1px solid rgba(250, 204, 21, 0.55)",
+                                        flexShrink: 0,
+                                    }}
+                                >
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        width="22"
+                                        height="22"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="1.8"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        style={{ color: "rgba(15, 23, 42, 0.88)" }}
+                                    >
+                                        <path d="M20 7h-9" />
+                                        <path d="M14 17H5" />
+                                        <circle cx="7" cy="7" r="2" />
+                                        <circle cx="17" cy="17" r="2" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p className="king-side-panel__label" style={{ marginBottom: "0.35rem" }}>
+                                        Available now
+                                    </p>
+                                    <h3 style={{ margin: 0, letterSpacing: "-0.02em" }}>
+                                        {filteredListings.length} items ready for pickup
+                                    </h3>
+                                    <p className="mb-0" style={{ color: "rgba(15, 23, 42, 0.72)", marginTop: "0.25rem" }}>
+                                        Meet in public campus spaces and confirm pick-up times in chat.
+                                    </p>
+                                </div>
                             </div>
                             <span className="king-post-badge">
                                 {selectedMode === "Share" ? "Sharing is free and community-based" : "Safe campus meetups encouraged"}
@@ -384,10 +693,39 @@ function MarketPlace() {
                         <div className="king-market-grid">
                             {filteredListings.map((listing) => (
                                 <article key={listing.id} className="king-market-card">
-                                    <div className="king-market-card__top">
+                                    <div
+                                        style={{
+                                            borderRadius: "18px",
+                                            overflow: "hidden",
+                                            border: "1px solid rgba(0, 43, 92, 0.12)",
+                                            background: "rgba(255, 255, 255, 0.86)",
+                                            height: "190px",
+                                            padding: "10px",
+                                        }}
+                                    >
+                                        {(() => {
+                                            const img = getListingImage(listing.category);
+                                            return (
+                                                <img
+                                                    src={img.src}
+                                                    alt={img.alt}
+                                                    loading="lazy"
+                                                    style={{
+                                                        width: "100%",
+                                                        height: "100%",
+                                                        objectFit: "contain",
+                                                        display: "block",
+                                                    }}
+                                                />
+                                            );
+                                        })()}
+                                    </div>
+
+                                    <div className="king-market-card__top" style={{ marginTop: "0.95rem" }}>
                                         <span className="king-market-card__tag">{listing.tag}</span>
                                         <span className="king-market-card__price">{listing.price}</span>
                                     </div>
+
                                     <div className="king-market-card__body">
                                         <div className="king-market-card__category">
                                             <span className="king-market-card__icon" aria-hidden="true">
