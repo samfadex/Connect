@@ -75,34 +75,39 @@ type CategoryAccent = {
     borderColor: string;
 };
 
+const notificationInk = "#0b1220";
+const notificationYellowTint = "rgba(250, 204, 21, 0.18)";
+const notificationYellowTintStrong = "rgba(250, 204, 21, 0.28)";
+const notificationYellowBorder = "rgba(250, 204, 21, 0.38)";
+
 const categoryAccent: Record<NotificationCategory, CategoryAccent> = {
     Messages: {
         label: "Messages",
-        chipClassName: "bg-primary text-light",
-        iconClassName: "bg-primary-subtle text-primary",
-        dotClassName: "bg-primary",
-        borderColor: "var(--bs-primary)",
+        chipClassName: "bg-warning text-dark",
+        iconClassName: "bg-warning text-dark",
+        dotClassName: "bg-warning",
+        borderColor: "var(--bs-warning)",
     },
     Marketplace: {
         label: "Marketplace",
-        chipClassName: "bg-success text-light",
-        iconClassName: "bg-success-subtle text-success",
-        dotClassName: "bg-success",
-        borderColor: "var(--bs-success)",
+        chipClassName: "bg-warning text-dark",
+        iconClassName: "bg-warning text-dark",
+        dotClassName: "bg-warning",
+        borderColor: "var(--bs-warning)",
     },
     Community: {
         label: "Community",
         chipClassName: "bg-warning text-dark",
-        iconClassName: "bg-warning-subtle text-warning-emphasis",
+        iconClassName: "bg-warning text-dark",
         dotClassName: "bg-warning",
         borderColor: "var(--bs-warning)",
     },
     System: {
         label: "System",
-        chipClassName: "bg-secondary text-light",
-        iconClassName: "bg-secondary-subtle text-secondary-emphasis",
-        dotClassName: "bg-secondary",
-        borderColor: "var(--bs-secondary)",
+        chipClassName: "bg-warning text-dark",
+        iconClassName: "bg-warning text-dark",
+        dotClassName: "bg-warning",
+        borderColor: "var(--bs-warning)",
     },
 };
 
@@ -220,7 +225,7 @@ function NotificationCenter({ unreadCount, items = defaultNotifications }: Notif
                     style={{
                         visibility: "visible",
                         background: "var(--king-paper)",
-                        borderLeft: "1px solid var(--king-border)",
+                        borderLeft: `1px solid ${notificationYellowBorder}`,
                         boxShadow: "var(--king-shadow)",
                         width: "min(420px, 92vw)",
                         borderTopLeftRadius: "22px",
@@ -233,16 +238,18 @@ function NotificationCenter({ unreadCount, items = defaultNotifications }: Notif
                         style={{
                             padding: "1.1rem 1.1rem 0.85rem",
                             background:
-                                "linear-gradient(180deg, rgba(255,255,255,0.98), rgba(239,246,255,0.9))",
-                            borderBottom: "1px solid var(--king-border)",
+                                `linear-gradient(180deg, rgba(255,255,255,0.98), ${notificationYellowTint})`,
+                            borderBottom: `1px solid ${notificationYellowBorder}`,
                         }}
                     >
                         <div className="d-flex align-items-center justify-content-between w-100 gap-3">
                             <div>
-                                <h2 className="m-0" style={{ fontSize: "1.35rem", color: "var(--king-navy)" }}>
+                                <h2 className="m-0" style={{ fontSize: "1.35rem", color: notificationInk }}>
                                     Notifications
                                 </h2>
-                                <p className="m-0 small text-muted">{badgeCount} unread</p>
+                                <p className="m-0 small" style={{ color: notificationInk }}>
+                                    {badgeCount} unread
+                                </p>
                             </div>
                             <button
                                 ref={closeButtonRef}
@@ -250,6 +257,7 @@ function NotificationCenter({ unreadCount, items = defaultNotifications }: Notif
                                 className="btn-close"
                                 aria-label="Close"
                                 onClick={handleClose}
+                                style={{ opacity: 0.9 }}
                             />
                         </div>
                     </div>
@@ -261,8 +269,8 @@ function NotificationCenter({ unreadCount, items = defaultNotifications }: Notif
                                     style={{
                                         padding: "0.95rem",
                                         borderRadius: "18px",
-                                        background: "rgba(255, 255, 255, 0.94)",
-                                        border: "1px solid rgba(1, 43, 92, 0.1)",
+                                        background: notificationYellowTint,
+                                        border: `1px solid ${notificationYellowBorder}`,
                                     }}
                                 >
                                     <div className="d-flex align-items-start gap-3">
@@ -288,19 +296,28 @@ function NotificationCenter({ unreadCount, items = defaultNotifications }: Notif
                                                     >
                                                         {categoryAccent[selectedNotification.category].label}
                                                     </span>
-                                                    <div className="fw-semibold mt-2" style={{ color: "var(--king-navy)" }}>
+                                                    <div className="fw-semibold mt-2" style={{ color: notificationInk }}>
                                                         {selectedNotification.title}
                                                     </div>
                                                 </div>
-                                                <span className="small text-muted">{selectedNotification.time}</span>
+                                                <span className="small" style={{ color: notificationInk }}>
+                                                    {selectedNotification.time}
+                                                </span>
                                             </div>
 
-                                            <p className="mb-0 mt-1 text-muted">{selectedNotification.detail}</p>
+                                            <p className="mb-0 mt-1" style={{ color: notificationInk }}>
+                                                {selectedNotification.detail}
+                                            </p>
 
                                             <div className="d-flex gap-2 flex-wrap mt-3">
                                                 <button
                                                     type="button"
-                                                    className="btn btn-sm btn-light"
+                                                    className="btn btn-sm"
+                                                    style={{
+                                                        borderColor: notificationYellowBorder,
+                                                        background: notificationYellowTint,
+                                                        color: notificationInk,
+                                                    }}
                                                     onClick={() => setSelectedNotificationId(null)}
                                                 >
                                                     Back
@@ -308,7 +325,13 @@ function NotificationCenter({ unreadCount, items = defaultNotifications }: Notif
                                                 {selectedNotification.href ? (
                                                     <button
                                                         type="button"
-                                                        className="btn btn-sm btn-primary"
+                                                        className="btn btn-sm"
+                                                        style={{
+                                                            borderColor: notificationYellowBorder,
+                                                            background: notificationYellowTintStrong,
+                                                            color: notificationInk,
+                                                            fontWeight: 700,
+                                                        }}
                                                         onClick={() => {
                                                             window.location.hash = selectedNotification.href ?? "#home";
                                                             handleClose();
@@ -335,14 +358,26 @@ function NotificationCenter({ unreadCount, items = defaultNotifications }: Notif
                                 <div className="btn-group btn-group-sm" role="group" aria-label="Notification view">
                                     <button
                                         type="button"
-                                        className={`btn ${unreadOnly ? "btn-outline-secondary" : "btn-primary"}`}
+                                        className="btn"
+                                        style={{
+                                            borderColor: notificationYellowBorder,
+                                            background: notificationYellowTint,
+                                            color: notificationInk,
+                                            boxShadow: unreadOnly ? undefined : `inset 0 0 0 2px ${notificationInk}`,
+                                        }}
                                         onClick={() => setUnreadOnly(false)}
                                     >
                                         All
                                     </button>
                                     <button
                                         type="button"
-                                        className={`btn ${unreadOnly ? "btn-primary" : "btn-outline-secondary"}`}
+                                        className="btn"
+                                        style={{
+                                            borderColor: notificationYellowBorder,
+                                            background: notificationYellowTint,
+                                            color: notificationInk,
+                                            boxShadow: unreadOnly ? `inset 0 0 0 2px ${notificationInk}` : undefined,
+                                        }}
                                         onClick={() => setUnreadOnly(true)}
                                     >
                                         Unread
@@ -373,7 +408,7 @@ function NotificationCenter({ unreadCount, items = defaultNotifications }: Notif
                                         left: "0.75rem",
                                         top: "50%",
                                         transform: "translateY(-50%)",
-                                        color: "rgba(22, 38, 59, 0.55)",
+                                        color: notificationInk,
                                         pointerEvents: "none",
                                     }}
                                 >
@@ -411,7 +446,9 @@ function NotificationCenter({ unreadCount, items = defaultNotifications }: Notif
                                 filteredItems.length === 0 ? (
                                     <div className="king-side-panel">
                                         <p className="king-side-panel__label">You&apos;re all caught up</p>
-                                        <p className="mb-0 text-muted">No notifications match your filters right now.</p>
+                                        <p className="mb-0" style={{ color: notificationInk }}>
+                                            No notifications match your filters right now.
+                                        </p>
                                     </div>
                                 ) : (
                                     groupedByCategory.map(([category, categoryItems]) =>
@@ -431,7 +468,7 @@ function NotificationCenter({ unreadCount, items = defaultNotifications }: Notif
                                                         >
                                                             <CategoryGlyph category={category} />
                                                         </span>
-                                                        <div className="fw-semibold" style={{ color: "var(--king-navy)" }}>
+                                                        <div className="fw-semibold" style={{ color: notificationInk }}>
                                                             {category}
                                                         </div>
                                                     </div>
@@ -449,16 +486,16 @@ function NotificationCenter({ unreadCount, items = defaultNotifications }: Notif
                                                                 cursor: "pointer",
                                                                 padding: "0.75rem 0.85rem",
                                                                 borderRadius: "16px",
-                                                                borderLeft: `4px solid ${categoryAccent[item.category].borderColor}`,
-                                                                background:
-                                                                    item.id === selectedNotificationId
-                                                                        ? "rgba(1, 43, 92, 0.08)"
-                                                                        : item.unread
-                                                                            ? "rgba(13, 110, 253, 0.07)"
-                                                                            : undefined,
-                                                            }}
-                                                            onClick={() => setSelectedNotificationId(item.id)}
-                                                        >
+                                                                 borderLeft: `4px solid ${categoryAccent[item.category].borderColor}`,
+                                                                  background:
+                                                                      item.id === selectedNotificationId
+                                                                          ? notificationYellowTintStrong
+                                                                          : item.unread
+                                                                              ? notificationYellowTint
+                                                                              : undefined,
+                                                              }}
+                                                              onClick={() => setSelectedNotificationId(item.id)}
+                                                          >
                                                             <div className="d-flex align-items-start gap-3">
                                                                 <div
                                                                     className={`rounded-circle ${categoryAccent[item.category].iconClassName}`}
@@ -475,13 +512,15 @@ function NotificationCenter({ unreadCount, items = defaultNotifications }: Notif
                                                                 </div>
                                                                 <div className="flex-grow-1">
                                                                     <div className="d-flex align-items-start justify-content-between gap-2">
-                                                                        <div className="fw-semibold" style={{ color: "var(--king-navy)" }}>
-                                                                            {item.title}
-                                                                        </div>
-                                                                        <span className="small text-muted">{item.time}</span>
-                                                                    </div>
-                                                                    <p className="mb-0">{item.detail}</p>
-                                                                </div>
+                                                        <div className="fw-semibold" style={{ color: notificationInk }}>
+                                                            {item.title}
+                                                        </div>
+                                                        <span className="small" style={{ color: notificationInk }}>
+                                                            {item.time}
+                                                        </span>
+                                                    </div>
+                                                    <p className="mb-0">{item.detail}</p>
+                                                </div>
                                                                 {item.unread ? (
                                                                     <span
                                                                         className={`rounded-circle ${categoryAccent[item.category].dotClassName}`}
@@ -506,7 +545,9 @@ function NotificationCenter({ unreadCount, items = defaultNotifications }: Notif
                             ) : filteredItems.length === 0 ? (
                                 <div className="king-side-panel">
                                     <p className="king-side-panel__label">Nothing here</p>
-                                    <p className="mb-0 text-muted">Try switching categories or clearing your search.</p>
+                                    <p className="mb-0" style={{ color: notificationInk }}>
+                                        Try switching categories or clearing your search.
+                                    </p>
                                 </div>
                             ) : (
                                 <section className="mb-3">
@@ -524,7 +565,7 @@ function NotificationCenter({ unreadCount, items = defaultNotifications }: Notif
                                             >
                                                 <CategoryGlyph category={activeCategory} />
                                             </span>
-                                            <div className="fw-semibold" style={{ color: "var(--king-navy)" }}>
+                                            <div className="fw-semibold" style={{ color: notificationInk }}>
                                                 {activeCategory}
                                             </div>
                                         </div>
@@ -545,9 +586,9 @@ function NotificationCenter({ unreadCount, items = defaultNotifications }: Notif
                                                     borderLeft: `4px solid ${categoryAccent[item.category].borderColor}`,
                                                     background:
                                                         item.id === selectedNotificationId
-                                                            ? "rgba(1, 43, 92, 0.08)"
+                                                            ? notificationYellowTintStrong
                                                             : item.unread
-                                                                ? "rgba(13, 110, 253, 0.07)"
+                                                                ? notificationYellowTint
                                                                 : undefined,
                                                 }}
                                                 onClick={() => setSelectedNotificationId(item.id)}
@@ -568,10 +609,12 @@ function NotificationCenter({ unreadCount, items = defaultNotifications }: Notif
                                                     </div>
                                                     <div className="flex-grow-1">
                                                         <div className="d-flex align-items-start justify-content-between gap-2">
-                                                            <div className="fw-semibold" style={{ color: "var(--king-navy)" }}>
+                                                            <div className="fw-semibold" style={{ color: notificationInk }}>
                                                                 {item.title}
                                                             </div>
-                                                            <span className="small text-muted">{item.time}</span>
+                                                            <span className="small" style={{ color: notificationInk }}>
+                                                                {item.time}
+                                                            </span>
                                                         </div>
                                                         <p className="mb-0">{item.detail}</p>
                                                     </div>
@@ -637,14 +680,21 @@ function NotificationCenter({ unreadCount, items = defaultNotifications }: Notif
         <>
             <button
                 type="button"
-                className="king-nav-link"
+                className={`king-nav-link${badgeCount ? " position-relative" : ""}`}
                 aria-haspopup="dialog"
                 aria-controls={offcanvasId}
                 aria-expanded={isOpen}
                 onClick={handleOpen}
             >
                 <span>Notifications</span>
-                <span className="badge bg-warning text-dark">{badgeCount}</span>
+                {badgeCount ? (
+                    <span
+                        className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark"
+                        style={{ fontSize: "0.7rem" }}
+                    >
+                        {badgeCount}
+                    </span>
+                ) : null}
             </button>
             {overlay}
         </>

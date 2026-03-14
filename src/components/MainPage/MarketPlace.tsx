@@ -28,7 +28,7 @@ const navigationItems = [
     { label: "Home", href: "#home" },
     { label: "Posts", href: "#posts", badge: "5" },
     { label: "Course Forum", href: "#" },
-    { label: "Messages", href: "#messages", badge: "12" },
+    { label: "Chat", href: "#messages", badge: "12" },
     { label: "Marketplace", href: "#marketplace", active: true },
 ];
 
@@ -242,13 +242,21 @@ function MarketPlace() {
                     <nav className="king-navbar" aria-label="Primary">
                         <div className="king-navbar__links">
                             {navigationItems.map((item) => (
+                                // Render badges as a corner badge for consistency with Chat.
                                 <a
                                     key={item.label}
-                                    className={`king-nav-link${item.active ? " king-nav-link--active" : ""}`}
+                                    className={`king-nav-link${item.active ? " king-nav-link--active" : ""}${item.badge ? " position-relative" : ""}`}
                                     href={item.href}
                                 >
                                     <span>{item.label}</span>
-                                    {item.badge ? <span className="badge bg-warning text-dark">{item.badge}</span> : null}
+                                    {item.badge ? (
+                                        <span
+                                            className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark"
+                                            style={{ fontSize: "0.7rem" }}
+                                        >
+                                            {item.badge}
+                                        </span>
+                                    ) : null}
                                 </a>
                             ))}
 
