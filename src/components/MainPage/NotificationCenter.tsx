@@ -680,7 +680,7 @@ function NotificationCenter({ unreadCount, items = defaultNotifications }: Notif
         <>
             <button
                 type="button"
-                className={`king-nav-link${badgeCount ? " position-relative" : ""}`}
+                className={`king-nav-link${badgeCount ? " king-nav-link--with-badge" : ""}`}
                 aria-haspopup="dialog"
                 aria-controls={offcanvasId}
                 aria-expanded={isOpen}
@@ -688,10 +688,7 @@ function NotificationCenter({ unreadCount, items = defaultNotifications }: Notif
             >
                 <span>Notifications</span>
                 {badgeCount ? (
-                    <span
-                        className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark"
-                        style={{ fontSize: "0.7rem" }}
-                    >
+                    <span className="king-nav-link__badge">
                         {badgeCount}
                     </span>
                 ) : null}

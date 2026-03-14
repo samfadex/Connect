@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import ClickableCard from "../ClickableCard";
 import Title from "../Title";
 import Notification from "../Notification";
 import ConnectLogo from "../ConnectLogo";
-import NotificationCenter from "./NotificationCenter";
 import SiteFooter from "./SiteFooter";
+import SharedPageHeader from "./SharedPageHeader";
 
 type StudentProfile = {
     id: number;
@@ -24,23 +24,6 @@ const navigationItems = [
     { label: "Posts", href: "#posts", badge: "5" },
     { label: "Chat", href: "#messages", badge: "12" },
     { label: "Marketplace", href: "#marketplace" },
-];
-
-const faculties = [
-    "Arts",
-    "Science",
-    "Business",
-    "Education",
-    "Music",
-];
-
-const moreItems = [
-    { label: "About", href: "#" },
-    { label: "Campus Map", href: "https://www.kingsu.ca/campus-life/campus-map" },
-    { label: "Library", href: "https://www.kingsu.ca/services/library" },
-    { label: "Student Services", href: "https://www.kingsu.ca/services" },
-    { label: "Campus Events", href: "https://www.kingsu.ca/about-us/calendar" },
-    { label: "Support", href: "https://www.kingsu.ca/student-hub/resources/resources" },
 ];
 
 const quickLinks = [
@@ -110,118 +93,35 @@ const handlePost = (value: string) => {
 
 function Landing({ currentStudent }: LandingProps) {
     const displayName = currentStudent?.name || currentStudent?.username || "Student";
-    const displayRole = currentStudent?.username || "Student";
+    const displayRole = currentStudent ? "3rd year student" : "Guest student";
     const [showVerse, setShowVerse] = useState(true);
-    const navRef = useRef<HTMLElement | null>(null);
-
-    const closeDropdowns = () => {
-        navRef.current?.querySelectorAll<HTMLDetailsElement>(".king-nav-dropdown[open]").forEach((dropdown) => {
-            dropdown.open = false;
-        });
-    };
-
-    useEffect(() => {
-        window.addEventListener("hashchange", closeDropdowns);
-        return () => window.removeEventListener("hashchange", closeDropdowns);
-    }, []);
 
     return (
         <div className="king-theme">
-            <header className="king-header">
+            <SharedPageHeader
+                navigationItems={navigationItems}
+                profileName={displayName}
+                profileStatus={displayRole}
+                searchPlaceholder="Search posts, groups, or people"
+                notificationCount="99+"
+            />
+
+            {showVerse ? (
                 <div className="king-shell">
-                    <div className="king-topbar">
-                        <div className="king-header__brand">
-                            <ConnectLogo className="connect-login-brand--header" eyebrow="Campus Network" name="CONNECT" />
-                        </div>
-
-                        <div className="king-topbar__actions">
-                            <div className="king-profile-chip" role="button" tabIndex={0} aria-label="Open profile">
-                                <span className="king-profile-chip__icon" aria-hidden="true">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                                        <path d="M20 21a8 8 0 0 0-16 0" />
-                                        <circle cx="12" cy="8" r="4" />
-                                    </svg>
-                                </span>
-                                <span className="king-profile-chip__copy">
-                                    <strong>{displayName}</strong>
-                                    <small>{displayRole}</small>
-                                </span>
-                            </div>
-                        </div>
+                    <div className="king-footer king-footer--inline">
+                        <p
+                            className="king-faith-verse king-faith-verse--compact king-faith-verse--green-fade"
+                            onAnimationEnd={(event) => {
+                                if (event.animationName === "kingVerseGreenBorderFade") {
+                                    setShowVerse(false);
+                                }
+                            }}
+                        >
+                            &quot;Let all that you do be done in love.&quot; <span>1 Corinthians 16:14</span>
+                        </p>
                     </div>
-
-                    <nav ref={navRef} className="king-navbar" aria-label="Primary">
-                        <div className="king-navbar__links">
-                            {navigationItems.map((item) => (
-                                // Render badges as a corner badge for consistency with Chat.
-                                <a
-                                    key={item.label}
-                                    className={`king-nav-link${item.active ? " king-nav-link--active" : ""}${item.badge ? " position-relative" : ""}`}
-                                    href={item.href}
-                                    onClick={closeDropdowns}
-                                >
-                                    <span>{item.label}</span>
-                                    {item.badge ? (
-                                        <span
-                                            className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark"
-                                            style={{ fontSize: "0.7rem" }}
-                                        >
-                                            {item.badge}
-                                        </span>
-                                    ) : null}
-                                </a>
-                            ))}
-
-                            <NotificationCenter unreadCount="99+" />
-
-                            <details className="king-nav-dropdown">
-                                <summary className="king-nav-link king-nav-dropdown__toggle">
-                                    <span>Faculties</span>
-                                </summary>
-                                <div className="king-nav-dropdown__menu">
-                                    {faculties.map((faculty) => (
-                                        <a key={faculty} className="king-nav-dropdown__item" href="#faculties" onClick={closeDropdowns}>
-                                            {faculty}
-                                        </a>
-                                    ))}
-                                </div>
-                            </details>
-
-                            <details className="king-nav-dropdown">
-                                <summary className="king-nav-link king-nav-dropdown__toggle">
-                                    <span>More</span>
-                                </summary>
-                                    <div className="king-nav-dropdown__menu">
-                                        {moreItems.map((item) => (
-                                            <a key={item.label} className="king-nav-dropdown__item" href={item.href} onClick={closeDropdowns}>
-                                                {item.label}
-                                            </a>
-                                        ))}
-                                    </div>
-                                </details>
-                        </div>
-
-                        <div className="king-navbar__actions">
-                            <input className="king-search" placeholder="Search posts, groups, or people" />
-                        </div>
-                    </nav>
-
-                    {showVerse ? (
-                        <div className="king-footer king-footer--inline">
-                            <p
-                                className="king-faith-verse king-faith-verse--compact king-faith-verse--green-fade"
-                                onAnimationEnd={(event) => {
-                                    if (event.animationName === "kingVerseGreenBorderFade") {
-                                        setShowVerse(false);
-                                    }
-                                }}
-                            >
-                                &quot;Let all that you do be done in love.&quot; <span>1 Corinthians 16:14</span>
-                            </p>
-                        </div>
-                    ) : null}
                 </div>
-            </header>
+            ) : null}
 
             <main className="king-main king-shell">
                 <section className="king-hero">
@@ -302,8 +202,8 @@ function Landing({ currentStudent }: LandingProps) {
                 <section className="king-support-grid">
                     {supportStreams.map((stream) => (
                         <article key={stream.title} className="king-side-panel king-side-panel--soft">
-                            <p className="king-side-panel__label">Community impact</p>
-                            <h3>{stream.title}</h3>
+                            <p className="king-side-panel__label king-side-panel__label--blue">Community impact</p>
+                            <h3 className="king-support-grid__title">{stream.title}</h3>
                             <p className="king-support-grid__copy">{stream.description}</p>
                         </article>
                     ))}

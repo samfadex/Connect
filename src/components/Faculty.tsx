@@ -1,5 +1,4 @@
-import ConnectLogo from "./ConnectLogo";
-import NotificationCenter from "./MainPage/NotificationCenter";
+import SharedPageHeader from "./MainPage/SharedPageHeader";
 import SiteFooter from "./MainPage/SiteFooter";
 
 type StudentProfile = {
@@ -129,62 +128,17 @@ const facultyGroups: FacultyGroup[] = [
 
 function Faculty({ currentStudent }: FacultyProps) {
     const displayName = currentStudent?.name || currentStudent?.username || "Student";
-    const displayRole = currentStudent?.username || "Student";
+    const displayRole = currentStudent ? "3rd year student" : "Guest student";
 
     return (
         <div className="king-theme">
-            <header className="king-header">
-                <div className="king-shell">
-                    <div className="king-topbar">
-                        <div className="king-header__brand">
-                            <ConnectLogo className="connect-login-brand--header" eyebrow="Campus Network" name="CONNECT" />
-                        </div>
-
-                        <div className="king-topbar__actions">
-                            <div className="king-profile-chip" role="button" tabIndex={0} aria-label="Open profile">
-                                <span className="king-profile-chip__icon" aria-hidden="true">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                                        <path d="M20 21a8 8 0 0 0-16 0" />
-                                        <circle cx="12" cy="8" r="4" />
-                                    </svg>
-                                </span>
-                                <span className="king-profile-chip__copy">
-                                    <strong>{displayName}</strong>
-                                    <small>{displayRole}</small>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <nav className="king-navbar" aria-label="Primary">
-                        <div className="king-navbar__links">
-                            {navigationItems.map((item) => (
-                                <a
-                                    key={item.label}
-                                    className={`king-nav-link${item.active ? " king-nav-link--active" : ""}${item.badge ? " position-relative" : ""}`}
-                                    href={item.href}
-                                >
-                                    <span>{item.label}</span>
-                                    {item.badge ? (
-                                        <span
-                                            className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning text-dark"
-                                            style={{ fontSize: "0.7rem" }}
-                                        >
-                                            {item.badge}
-                                        </span>
-                                    ) : null}
-                                </a>
-                            ))}
-
-                            <NotificationCenter unreadCount="99+" />
-                        </div>
-
-                        <div className="king-navbar__actions">
-                            <input className="king-search" placeholder="Search faculty resources and forums" />
-                        </div>
-                    </nav>
-                </div>
-            </header>
+            <SharedPageHeader
+                navigationItems={navigationItems}
+                profileName={displayName}
+                profileStatus={displayRole}
+                searchPlaceholder="Search faculty resources and forums"
+                notificationCount="99+"
+            />
 
             <main className="king-main king-shell faculty-page">
                 <section className="faculty-hero">

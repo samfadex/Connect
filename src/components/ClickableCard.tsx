@@ -62,7 +62,7 @@ function ClickableCard({ title, initialValue = "", onPost, onLike, onShare }: Cl
         onShare?.();
     };
 
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Enter") {
             event.preventDefault();
             handlePost();
@@ -93,15 +93,14 @@ function ClickableCard({ title, initialValue = "", onPost, onLike, onShare }: Cl
 
                         <div className="mb-2">
                             <div className="input-group">
-                                <textarea
+                                <input
+                                    type="text"
                                     value={value}
                                     onChange={(e) => setValue(e.target.value)}
                                     onKeyDown={handleKeyDown}
-                                    className="form-control"
+                                    className="form-control king-post-input"
                                     placeholder="Share something happening on campus"
                                     aria-label="Post input"
-                                    rows={4}
-                                    style={{ resize: "vertical", maxHeight: "240px" }}
                                 />
                                 <button
                                     type="button"
