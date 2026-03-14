@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ClickableCard from "../ClickableCard";
 import Title from "../Title";
 import Notification from "../Notification";
@@ -20,6 +20,7 @@ type LandingProps = {
 
 const navigationItems = [
     { label: "Home", href: "#home", active: true },
+    { label: "Faculties", href: "#faculties" },
     { label: "Posts", href: "#posts", badge: "5" },
     { label: "Chat", href: "#messages", badge: "12" },
     { label: "Marketplace", href: "#marketplace" },
@@ -111,6 +112,18 @@ function Landing({ currentStudent }: LandingProps) {
     const displayName = currentStudent?.name || currentStudent?.username || "Student";
     const displayRole = currentStudent?.username || "Student";
     const [showVerse, setShowVerse] = useState(true);
+    const navRef = useRef<HTMLElement | null>(null);
+
+    const closeDropdowns = () => {
+        navRef.current?.querySelectorAll<HTMLDetailsElement>(".king-nav-dropdown[open]").forEach((dropdown) => {
+            dropdown.open = false;
+        });
+    };
+
+    useEffect(() => {
+        window.addEventListener("hashchange", closeDropdowns);
+        return () => window.removeEventListener("hashchange", closeDropdowns);
+    }, []);
 
     return (
         <div className="king-theme">
@@ -137,7 +150,7 @@ function Landing({ currentStudent }: LandingProps) {
                         </div>
                     </div>
 
-                    <nav className="king-navbar" aria-label="Primary">
+                    <nav ref={navRef} className="king-navbar" aria-label="Primary">
                         <div className="king-navbar__links">
                             {navigationItems.map((item) => (
                                 // Render badges as a corner badge for consistency with Chat.
@@ -145,6 +158,7 @@ function Landing({ currentStudent }: LandingProps) {
                                     key={item.label}
                                     className={`king-nav-link${item.active ? " king-nav-link--active" : ""}${item.badge ? " position-relative" : ""}`}
                                     href={item.href}
+                                    onClick={closeDropdowns}
                                 >
                                     <span>{item.label}</span>
                                     {item.badge ? (
@@ -166,7 +180,7 @@ function Landing({ currentStudent }: LandingProps) {
                                 </summary>
                                 <div className="king-nav-dropdown__menu">
                                     {faculties.map((faculty) => (
-                                        <a key={faculty} className="king-nav-dropdown__item" href="#">
+                                        <a key={faculty} className="king-nav-dropdown__item" href="#faculties" onClick={closeDropdowns}>
                                             {faculty}
                                         </a>
                                     ))}
@@ -179,7 +193,7 @@ function Landing({ currentStudent }: LandingProps) {
                                 </summary>
                                     <div className="king-nav-dropdown__menu">
                                         {moreItems.map((item) => (
-                                            <a key={item.label} className="king-nav-dropdown__item" href={item.href}>
+                                            <a key={item.label} className="king-nav-dropdown__item" href={item.href} onClick={closeDropdowns}>
                                                 {item.label}
                                             </a>
                                         ))}
