@@ -5,12 +5,14 @@ import Title from "../Title";
 
 type MarketplaceCategory = "Textbooks" | "Shoes" | "Clothing";
 type ListingIcon = "textbook" | "running-shoe" | "hoodie" | "workbook" | "boots" | "jacket";
+type ListingMode = "Buy" | "Share";
 
 interface Listing {
     id: number;
     title: string;
     category: MarketplaceCategory;
     icon: ListingIcon;
+    mode: ListingMode;
     price: string;
     seller: string;
     condition: string;
@@ -25,8 +27,13 @@ const navigationItems = [
     { label: "Messages", href: "#messages", badge: "12" },
     { label: "Marketplace", href: "#marketplace", active: true },
     { label: "General Chat", href: "#", badge: "5" },
-    { label: "Profile", href: "#" },
     { label: "Notifications", href: "#", badge: "3" },
+];
+
+const moreItems = [
+    { label: "About", href: "#" },
+    { label: "Campus Map", href: "https://www.kingsu.ca/campus-life/campus-map" },
+    { label: "Library", href: "https://www.kingsu.ca/services/library" },
 ];
 
 const marketplaceListings: Listing[] = [
@@ -35,7 +42,8 @@ const marketplaceListings: Listing[] = [
         title: "Biology 201 Textbook",
         category: "Textbooks",
         icon: "textbook",
-        price: "$45",
+        mode: "Buy",
+        price: "$20",
         seller: "Ava T.",
         condition: "Lightly used",
         location: "Library foyer",
@@ -47,7 +55,8 @@ const marketplaceListings: Listing[] = [
         title: "Nike Running Shoes",
         category: "Shoes",
         icon: "running-shoe",
-        price: "$35",
+        mode: "Buy",
+        price: "$15",
         seller: "Jordan L.",
         condition: "Good condition",
         location: "Residence lobby",
@@ -59,31 +68,34 @@ const marketplaceListings: Listing[] = [
         title: "King's Hoodie",
         category: "Clothing",
         icon: "hoodie",
-        price: "$25",
+        mode: "Share",
+        price: "Free",
         seller: "Maya C.",
         condition: "Like new",
         location: "Campus cafe",
-        description: "Navy hoodie in medium. Worn twice and washed once, still really soft.",
-        tag: "Campus pick",
+        description: "Navy hoodie in medium. Worn twice and washed once, still really soft. Happy to lend it out for winter events.",
+        tag: "Community share",
     },
     {
         id: 4,
         title: "Calculus Workbook",
         category: "Textbooks",
         icon: "workbook",
-        price: "$20",
+        mode: "Share",
+        price: "Free",
         seller: "Noah B.",
         condition: "Used",
         location: "Science wing",
-        description: "Helpful worked examples and notes in pencil. Perfect if you're taking first-year calc.",
-        tag: "Budget",
+        description: "Helpful worked examples and notes in pencil. You can borrow it for exam prep week.",
+        tag: "Study share",
     },
     {
         id: 5,
         title: "Brown Chelsea Boots",
         category: "Shoes",
         icon: "boots",
-        price: "$40",
+        mode: "Buy",
+        price: "$18",
         seller: "Grace P.",
         condition: "Very good",
         location: "Student centre",
@@ -95,16 +107,18 @@ const marketplaceListings: Listing[] = [
         title: "Winter Jacket",
         category: "Clothing",
         icon: "jacket",
-        price: "$60",
+        mode: "Share",
+        price: "Free",
         seller: "Daniel K.",
         condition: "Excellent",
         location: "North parking lot",
-        description: "Warm black parka, size large, with deep pockets and no damage on the zipper.",
-        tag: "Seasonal",
+        description: "Warm black parka, size large, with deep pockets and no damage on the zipper. Available to borrow during cold snaps.",
+        tag: "Seasonal share",
     },
 ];
 
 const categoryFilters: Array<MarketplaceCategory | "All"> = ["All", "Textbooks", "Shoes", "Clothing"];
+const listingModes: Array<ListingMode | "All"> = ["All", "Buy", "Share"];
 
 const spotlightTips = [
     "Meet in public spots on campus like the library foyer or student centre.",
@@ -179,10 +193,15 @@ function ListingIcon({ icon }: { icon: ListingIcon }): ReactNode {
 
 function MarketPlace() {
     const [selectedCategory, setSelectedCategory] = useState<MarketplaceCategory | "All">("All");
+    const [selectedMode, setSelectedMode] = useState<ListingMode | "All">("All");
 
     const filteredListings = useMemo(
-        () => marketplaceListings.filter((listing) => selectedCategory === "All" || listing.category === selectedCategory),
-        [selectedCategory],
+        () => marketplaceListings.filter((listing) => {
+            const matchesCategory = selectedCategory === "All" || listing.category === selectedCategory;
+            const matchesMode = selectedMode === "All" || listing.mode === selectedMode;
+            return matchesCategory && matchesMode;
+        }),
+        [selectedCategory, selectedMode],
     );
 
     return (
@@ -197,18 +216,18 @@ function MarketPlace() {
                                 <p className="king-wordmark-subtitle">University</p>
                             </div>
                         </div>
-
-                        <button
-                            className="king-mode-toggle"
-                            type="button"
-                            aria-label="Toggle dark mode"
-                            onClick={() => {
-                                document.body.classList.toggle("dark-mode");
-                                localStorage.setItem("darkMode", document.body.classList.contains("dark-mode") ? "true" : "false");
-                            }}
-                        >
-                            Switch Theme
-                        </button>
+                        <div className="king-profile-chip" role="button" tabIndex={0} aria-label="Open profile">
+                            <span className="king-profile-chip__icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M20 21a8 8 0 0 0-16 0" />
+                                    <circle cx="12" cy="8" r="4" />
+                                </svg>
+                            </span>
+                            <span className="king-profile-chip__copy">
+                                <strong>Sarah Kim</strong>
+                                <small>Student</small>
+                            </span>
+                        </div>
                     </div>
 
                     <nav className="king-navbar" aria-label="Primary">
@@ -223,6 +242,19 @@ function MarketPlace() {
                                     {item.badge ? <span className="badge bg-warning text-dark">{item.badge}</span> : null}
                                 </a>
                             ))}
+
+                            <details className="king-nav-dropdown">
+                                <summary className="king-nav-link king-nav-dropdown__toggle">
+                                    <span>More</span>
+                                </summary>
+                                <div className="king-nav-dropdown__menu">
+                                    {moreItems.map((item) => (
+                                        <a key={item.label} className="king-nav-dropdown__item" href={item.href}>
+                                            {item.label}
+                                        </a>
+                                    ))}
+                                </div>
+                            </details>
                         </div>
 
                         <div className="king-navbar__actions">
@@ -242,7 +274,7 @@ function MarketPlace() {
                         </p>
                         <div className="king-hero__actions">
                             <a className="king-cta king-cta--primary" href="#messages">Message a seller</a>
-                            <a className="king-cta king-cta--secondary" href="#home">Back to home</a>
+                            <a className="king-cta king-cta--secondary" href="#marketplace">Sell or donate</a>
                         </div>
                     </div>
 
@@ -264,6 +296,22 @@ function MarketPlace() {
 
                 <section className="king-market-layout">
                     <aside className="king-market-sidebar">
+                        <div className="king-side-panel king-side-panel--soft">
+                            <p className="king-side-panel__label">Browse by type</p>
+                            <div className="king-market-filter-list">
+                                {listingModes.map((mode) => (
+                                    <button
+                                        key={mode}
+                                        type="button"
+                                        className={`king-market-filter${selectedMode === mode ? " king-market-filter--active" : ""}`}
+                                        onClick={() => setSelectedMode(mode)}
+                                    >
+                                        {mode}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
                         <div className="king-side-panel king-side-panel--soft">
                             <p className="king-side-panel__label">Browse by category</p>
                             <div className="king-market-filter-list">
@@ -296,7 +344,9 @@ function MarketPlace() {
                                 <p className="king-side-panel__label">Available now</p>
                                 <h3>{filteredListings.length} items ready for pickup</h3>
                             </div>
-                            <span className="king-post-badge">Safe campus meetups encouraged</span>
+                            <span className="king-post-badge">
+                                {selectedMode === "Share" ? "Sharing is free and community-based" : "Safe campus meetups encouraged"}
+                            </span>
                         </div>
 
                         <div className="king-market-grid">
@@ -313,6 +363,7 @@ function MarketPlace() {
                                             </span>
                                             <p className="king-side-panel__label">{listing.category}</p>
                                         </div>
+                                        <span className={`king-market-mode king-market-mode--${listing.mode.toLowerCase()}`}>{listing.mode}</span>
                                         <h3>{listing.title}</h3>
                                         <p>{listing.description}</p>
                                     </div>
@@ -331,8 +382,12 @@ function MarketPlace() {
                                         </div>
                                     </div>
                                     <div className="king-market-card__actions">
-                                        <a className="king-cta king-cta--primary" href="#messages">Message seller</a>
-                                        <button type="button" className="king-cta king-cta--secondary">Save item</button>
+                                        <a className="king-cta king-cta--primary" href="#messages">
+                                            {listing.mode === "Share" ? "Request item" : "Message seller"}
+                                        </a>
+                                        <button type="button" className="king-cta king-cta--secondary">
+                                            {listing.mode === "Share" ? "Offer thanks" : "Save item"}
+                                        </button>
                                     </div>
                                 </article>
                             ))}

@@ -29,8 +29,13 @@ const navigationItems = [
     { label: "Messages", href: "#messages", badge: "12", active: true },
     { label: "Marketplace", href: "#marketplace" },
     { label: "General Chat", href: "#", badge: "5" },
-    { label: "Profile", href: "#" },
     { label: "Notifications", href: "#", badge: "3" },
+];
+
+const moreItems = [
+    { label: "About", href: "#" },
+    { label: "Campus Map", href: "https://www.kingsu.ca/campus-life/campus-map" },
+    { label: "Library", href: "https://www.kingsu.ca/services/library" },
 ];
 
 const initialConversations: Conversation[] = [
@@ -166,18 +171,18 @@ function Messages() {
                                 <p className="king-wordmark-subtitle">University</p>
                             </div>
                         </div>
-
-                        <button
-                            className="king-mode-toggle"
-                            type="button"
-                            aria-label="Toggle dark mode"
-                            onClick={() => {
-                                document.body.classList.toggle("dark-mode");
-                                localStorage.setItem("darkMode", document.body.classList.contains("dark-mode") ? "true" : "false");
-                            }}
-                        >
-                            Switch Theme
-                        </button>
+                        <div className="king-profile-chip" role="button" tabIndex={0} aria-label="Open profile">
+                            <span className="king-profile-chip__icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M20 21a8 8 0 0 0-16 0" />
+                                    <circle cx="12" cy="8" r="4" />
+                                </svg>
+                            </span>
+                            <span className="king-profile-chip__copy">
+                                <strong>Sarah Kim</strong>
+                                <small>Student</small>
+                            </span>
+                        </div>
                     </div>
 
                     <nav className="king-navbar" aria-label="Primary">
@@ -192,6 +197,19 @@ function Messages() {
                                     {item.badge ? <span className="badge bg-warning text-dark">{item.badge}</span> : null}
                                 </a>
                             ))}
+
+                            <details className="king-nav-dropdown">
+                                <summary className="king-nav-link king-nav-dropdown__toggle">
+                                    <span>More</span>
+                                </summary>
+                                <div className="king-nav-dropdown__menu">
+                                    {moreItems.map((item) => (
+                                        <a key={item.label} className="king-nav-dropdown__item" href={item.href}>
+                                            {item.label}
+                                        </a>
+                                    ))}
+                                </div>
+                            </details>
                         </div>
 
                         <div className="king-navbar__actions">
@@ -305,7 +323,7 @@ function Messages() {
                                     placeholder={`Message ${activeConversation.name}`}
                                 />
                                 <button type="button" className="king-cta king-cta--primary king-chat-panel__send" onClick={handleSend}>
-                                    Send message
+                                    Send
                                 </button>
                             </div>
                             <div className="king-chat-panel__composer-actions">
