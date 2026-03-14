@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Title from "../Title";
 import ConnectLogo from "../ConnectLogo";
+import NotificationCenter from "./NotificationCenter";
+import SiteFooter from "./SiteFooter";
 
 type DiscussionPost = {
     id: number;
@@ -11,11 +13,9 @@ type DiscussionPost = {
 
 const navigationItems = [
     { label: "Home", href: "#home" },
-    { label: "Posts", href: "#posts", active: true },
-    { label: "Messages", href: "#messages", badge: "99+" },
+    { label: "Posts", href: "#posts", badge: "5", active: true },
+    { label: "Messages", href: "#messages" },
     { label: "Marketplace", href: "#marketplace" },
-    { label: "General Chat", href: "#", badge: "5" },
-    { label: "Notifications", href: "#", badge: "5" },
 ];
 
 const faculties = [
@@ -118,6 +118,8 @@ function Posts() {
                                 </a>
                             ))}
 
+                            <NotificationCenter unreadCount="99+" />
+
                             <details className="king-nav-dropdown">
                                 <summary className="king-nav-link king-nav-dropdown__toggle">
                                     <span>Faculties</span>
@@ -203,6 +205,8 @@ function Posts() {
                         </div>
                     </article>
                 </section>
+
+                <SiteFooter />
             </main>
         </div>
     );

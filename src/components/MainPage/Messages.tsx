@@ -2,6 +2,8 @@ import { useMemo, useState } from "react";
 import Notification from "../Notification";
 import Title from "../Title";
 import ConnectLogo from "../ConnectLogo";
+import NotificationCenter from "./NotificationCenter";
+import SiteFooter from "./SiteFooter";
 
 type MessageAuthor = "me" | "other";
 
@@ -26,11 +28,9 @@ interface Conversation {
 
 const navigationItems = [
     { label: "Home", href: "#home" },
-    { label: "Posts", href: "#posts" },
+    { label: "Posts", href: "#posts", badge: "5" },
     { label: "Messages", href: "#messages", badge: "12", active: true },
     { label: "Marketplace", href: "#marketplace" },
-    { label: "General Chat", href: "#", badge: "5" },
-    { label: "Notifications", href: "#", badge: "3" },
 ];
 
 const faculties = [
@@ -205,6 +205,8 @@ function Messages() {
                                     {item.badge ? <span className="badge bg-warning text-dark">{item.badge}</span> : null}
                                 </a>
                             ))}
+
+                            <NotificationCenter unreadCount={3} />
 
                             <details className="king-nav-dropdown">
                                 <summary className="king-nav-link king-nav-dropdown__toggle">
@@ -387,11 +389,7 @@ function Messages() {
                     </aside>
                 </section>
 
-                <div className="king-footer">
-                    <p className="king-faith-verse">
-                        &quot;Encourage one another and build each other up.&quot; <span>1 Thessalonians 5:11</span>
-                    </p>
-                </div>
+                <SiteFooter />
 
                 <Notification message="You have" number={totalUnread} color="dark" />
             </main>

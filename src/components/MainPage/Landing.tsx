@@ -3,6 +3,8 @@ import ClickableCard from "../ClickableCard";
 import Title from "../Title";
 import Notification from "../Notification";
 import ConnectLogo from "../ConnectLogo";
+import NotificationCenter from "./NotificationCenter";
+import SiteFooter from "./SiteFooter";
 
 type StudentProfile = {
     id: number;
@@ -18,11 +20,9 @@ type LandingProps = {
 
 const navigationItems = [
     { label: "Home", href: "#home", active: true },
-    { label: "Posts", href: "#posts" },
-    { label: "Messages", href: "#messages", badge: "99+" },
+    { label: "Posts", href: "#posts", badge: "5" },
+    { label: "Messages", href: "#messages" },
     { label: "Marketplace", href: "#marketplace" },
-    { label: "General Chat", href: "#", badge: "5" },
-    { label: "Notifications", href: "#", badge: "5" },
 ];
 
 const faculties = [
@@ -150,6 +150,8 @@ function Landing({ currentStudent }: LandingProps) {
                                 </a>
                             ))}
 
+                            <NotificationCenter unreadCount="99+" />
+
                             <details className="king-nav-dropdown">
                                 <summary className="king-nav-link king-nav-dropdown__toggle">
                                     <span>Faculties</span>
@@ -167,14 +169,14 @@ function Landing({ currentStudent }: LandingProps) {
                                 <summary className="king-nav-link king-nav-dropdown__toggle">
                                     <span>More</span>
                                 </summary>
-                                <div className="king-nav-dropdown__menu">
-                                    {moreItems.map((item) => (
-                                        <a key={item.label} className="king-nav-dropdown__item" href={item.href}>
-                                            {item.label}
-                                        </a>
-                                    ))}
-                                </div>
-                            </details>
+                                    <div className="king-nav-dropdown__menu">
+                                        {moreItems.map((item) => (
+                                            <a key={item.label} className="king-nav-dropdown__item" href={item.href}>
+                                                {item.label}
+                                            </a>
+                                        ))}
+                                    </div>
+                                </details>
                         </div>
 
                         <div className="king-navbar__actions">
@@ -328,6 +330,7 @@ function Landing({ currentStudent }: LandingProps) {
                     </div>
                 </div>
 
+                <SiteFooter />
                 <Notification message="General Chat has " number={5} color="dark" />
             </main>
             </div>

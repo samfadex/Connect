@@ -3,6 +3,8 @@ import type { ReactNode } from "react";
 import Notification from "../Notification";
 import Title from "../Title";
 import ConnectLogo from "../ConnectLogo";
+import NotificationCenter from "./NotificationCenter";
+import SiteFooter from "./SiteFooter";
 
 type MarketplaceCategory = "Textbooks" | "Shoes" | "Clothing";
 type ListingIcon = "textbook" | "running-shoe" | "hoodie" | "workbook" | "boots" | "jacket";
@@ -24,12 +26,10 @@ interface Listing {
 
 const navigationItems = [
     { label: "Home", href: "#home" },
-    { label: "Posts", href: "#posts" },
+    { label: "Posts", href: "#posts", badge: "5" },
     { label: "Course Forum", href: "#" },
     { label: "Messages", href: "#messages", badge: "12" },
     { label: "Marketplace", href: "#marketplace", active: true },
-    { label: "General Chat", href: "#", badge: "5" },
-    { label: "Notifications", href: "#", badge: "3" },
 ];
 
 const faculties = [
@@ -252,6 +252,8 @@ function MarketPlace() {
                                 </a>
                             ))}
 
+                            <NotificationCenter unreadCount={3} />
+
                             <details className="king-nav-dropdown">
                                 <summary className="king-nav-link king-nav-dropdown__toggle">
                                     <span>Faculties</span>
@@ -417,11 +419,7 @@ function MarketPlace() {
                     </section>
                 </section>
 
-                <div className="king-footer">
-                    <p className="king-faith-verse">
-                        &quot;Share with the Lord&apos;s people who are in need.&quot; <span>Romans 12:13</span>
-                    </p>
-                </div>
+                <SiteFooter />
 
                 <Notification message="Marketplace has" number={filteredListings.length} color="dark" />
             </main>
