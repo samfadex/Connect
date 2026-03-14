@@ -28,7 +28,6 @@ type FacultyGroup = {
 
 const navigationItems = [
     { label: "Home", href: "#home" },
-    { label: "Faculties", href: "#faculties", active: true },
     { label: "Chat", href: "#messages", badge: "12" },
     { label: "Marketplace", href: "#marketplace" },
 ];

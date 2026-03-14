@@ -126,8 +126,8 @@ function Landing({ currentStudent }: LandingProps) {
                 <section className="king-hero">
                     <div className="king-welcome-panel">
                         <div className="king-welcome">
-                            <p className="king-motto">Share more. Waste less. Lift each other up.</p>
                             <Title title="King&apos;s Connect" />
+                            <p className="king-motto">Share more. Waste less. Lift each other up.</p>
                             <p className="king-welcome-copy">
                                 We believe God did not create us to walk through life alone. King&apos;s Connect is a campus forum built to help students find community, care for one another in practical ways, and create the kind of support system God intended where needs are seen, help is shared, and no one has to struggle in silence.
                             </p>

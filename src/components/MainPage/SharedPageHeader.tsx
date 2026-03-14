@@ -101,7 +101,7 @@ function SharedPageHeader({
                         {navigationItems.map((item) => (
                             <a
                                 key={item.label}
-                                className={`king-nav-link${item.active ? " king-nav-link--active" : ""}${item.badge ? " king-nav-link--with-badge" : ""}`}
+                                className={`king-nav-link${item.active ? " king-nav-link--active" : ""}${item.badge ? " king-nav-link--with-badge" : ""}${item.label === "Posts" ? " king-nav-link--badge-near" : ""}`}
                                 href={item.href}
                                 onClick={closeDropdowns}
                             >
