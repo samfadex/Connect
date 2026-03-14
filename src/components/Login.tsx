@@ -106,9 +106,7 @@ function Login({ onLoginSuccess }: LoginProps) {
                             <button type="submit" className="btn btn-primary w-100" disabled={isSubmitting}>
                                 Log In
                             </button>
-                            {statusMessage ? (
-                                <p className="text-center mt-3 mb-1">{statusMessage}</p>
-                            ) : null}
+                            {statusMessage ? <p className="text-center mt-3 mb-1">{statusMessage}</p> : null}
 
                             <p className="text-end mt-3 mb-1">
                                 New here? <a href="#signup">Sign up</a>
@@ -122,3 +120,4 @@ function Login({ onLoginSuccess }: LoginProps) {
 }
 
 export default Login;
+

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ConnectLogo from "./ConnectLogo";
 import { supabase } from "../lib/supabase";
 
@@ -8,10 +8,11 @@ function Signup() {
     fullName: "",
     studentID: "",
     email: "",
-    password: ""
+    username: "",
+    password: "",
+    confirmPassword: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [statusMessage, setStatusMessage] = useState("");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -22,33 +23,47 @@ function Signup() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setStatusMessage("");
+
+    const fullName = formData.fullName.trim();
+    const email = formData.email.trim();
+    const username = formData.username.trim();
+    const password = formData.password;
+    const confirmPassword = formData.confirmPassword;
+
+    if (password !== confirmPassword) {
+      return;
+    }
+
     setIsSubmitting(true);
 
     const payload = {
-      name: formData.fullName,
+      name: fullName,
       studentId: formData.studentID ? Number(formData.studentID) : null,
-      schoolEmail: formData.email,
-      username: formData.email ? formData.email.split("@")[0] : null,
-      password: formData.password,
+      schoolEmail: email,
+      username: username ? username : (email ? email.split("@")[0] : null),
+      password,
     };
 
     const { error } = await supabase.from("Student").insert(payload);
 
     if (error) {
-      setStatusMessage(`Signup failed: ${error.message}`);
+      console.error("Signup failed:", error.message);
       setIsSubmitting(false);
       return;
     }
 
-    setStatusMessage("Signup successful. You can login now.");
     setFormData({
       fullName: "",
       studentID: "",
       email: "",
-      password: ""
+      username: "",
+      password: "",
+      confirmPassword: "",
     });
     setIsSubmitting(false);
+    window.setTimeout(() => {
+      window.location.hash = "#login";
+    }, 900);
   };
 
   return (
@@ -101,8 +116,23 @@ function Signup() {
                   className="form-control"
                   id="email"
                   name="email"
-                  placeholder="name@example.com"
+                  placeholder="firstname.lastname.stu@kingsu.ca"
                   value={formData.email}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="username" className="form-label">
+                  Username
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="username"
+                  name="username"
+                  placeholder="Choose a username"
+                  value={formData.username}
                   onChange={handleChange}
                 />
               </div>
@@ -122,12 +152,24 @@ function Signup() {
                 />
               </div>
 
+              <div className="mb-3">
+                <label htmlFor="confirmPassword" className="form-label">
+                  Confirm Password
+                </label>
+                <input
+                  type="password"
+                  className="form-control"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  placeholder="Confirm password"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                />
+              </div>
+
               <button type="submit" className="btn btn-primary w-100" disabled={isSubmitting}>
                 Sign Up
               </button>
-              {statusMessage ? (
-                <p className="text-center mt-3 mb-1">{statusMessage}</p>
-              ) : null}
               <p className="text-end mt-3 mb-1">
                 Already have an account? <a href="#login">Login</a>
               </p>
