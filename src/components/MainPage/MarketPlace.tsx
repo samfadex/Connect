@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import type { ReactNode } from "react";
 import Notification from "../Notification";
 import Title from "../Title";
+import ConnectLogo from "../ConnectLogo";
 
 type MarketplaceCategory = "Textbooks" | "Shoes" | "Clothing";
 type ListingIcon = "textbook" | "running-shoe" | "hoodie" | "workbook" | "boots" | "jacket";
@@ -23,7 +24,7 @@ interface Listing {
 
 const navigationItems = [
     { label: "Home", href: "#home" },
-    { label: "Posts", href: "#" },
+    { label: "Posts", href: "#posts" },
     { label: "Course Forum", href: "#" },
     { label: "Messages", href: "#messages", badge: "12" },
     { label: "Marketplace", href: "#marketplace", active: true },
@@ -31,10 +32,21 @@ const navigationItems = [
     { label: "Notifications", href: "#", badge: "3" },
 ];
 
+const faculties = [
+    "Arts",
+    "Science",
+    "Business",
+    "Education",
+    "Music",
+];
+
 const moreItems = [
     { label: "About", href: "#" },
     { label: "Campus Map", href: "https://www.kingsu.ca/campus-life/campus-map" },
     { label: "Library", href: "https://www.kingsu.ca/services/library" },
+    { label: "Student Services", href: "https://www.kingsu.ca/services" },
+    { label: "Campus Events", href: "https://www.kingsu.ca/about-us/calendar" },
+    { label: "Support", href: "https://www.kingsu.ca/student-hub/resources/resources" },
 ];
 
 const marketplaceListings: Listing[] = [
@@ -211,11 +223,7 @@ function MarketPlace() {
                 <div className="king-shell">
                     <div className="king-topbar">
                         <div className="king-header__brand">
-                            <div className="king-brand-copy">
-                                <p className="king-eyebrow">The</p>
-                                <h1 className="king-wordmark">King&apos;s</h1>
-                                <p className="king-wordmark-subtitle">University</p>
-                            </div>
+                            <ConnectLogo className="connect-login-brand--header" eyebrow="Campus Network" name="CONNECT" />
                         </div>
                         <div className="king-profile-chip" role="button" tabIndex={0} aria-label="Open profile">
                             <span className="king-profile-chip__icon" aria-hidden="true">
@@ -240,9 +248,22 @@ function MarketPlace() {
                                     href={item.href}
                                 >
                                     <span>{item.label}</span>
-                                    {item.badge ? <span className="badge king-post-badge">{item.badge}</span> : null}
+                                    {item.badge ? <span className="badge bg-warning text-dark">{item.badge}</span> : null}
                                 </a>
                             ))}
+
+                            <details className="king-nav-dropdown">
+                                <summary className="king-nav-link king-nav-dropdown__toggle">
+                                    <span>Faculties</span>
+                                </summary>
+                                <div className="king-nav-dropdown__menu">
+                                    {faculties.map((faculty) => (
+                                        <a key={faculty} className="king-nav-dropdown__item" href="#">
+                                            {faculty}
+                                        </a>
+                                    ))}
+                                </div>
+                            </details>
 
                             <details className="king-nav-dropdown">
                                 <summary className="king-nav-link king-nav-dropdown__toggle">

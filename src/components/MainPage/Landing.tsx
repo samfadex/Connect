@@ -1,3 +1,4 @@
+import { useState } from "react";
 import ClickableCard from "../ClickableCard";
 import Title from "../Title";
 import Notification from "../Notification";
@@ -17,7 +18,7 @@ type LandingProps = {
 
 const navigationItems = [
     { label: "Home", href: "#home", active: true },
-    { label: "Posts", href: "#" },
+    { label: "Posts", href: "#posts" },
     { label: "Messages", href: "#messages", badge: "99+" },
     { label: "Marketplace", href: "#marketplace" },
     { label: "General Chat", href: "#", badge: "5" },
@@ -94,7 +95,6 @@ const supportStreams = [
     },
 ];
 
-
 const handlePost = (value: string) => {
         console.log("Post created:", value);
     };
@@ -110,6 +110,7 @@ const handlePost = (value: string) => {
 function Landing({ currentStudent }: LandingProps) {
     const displayName = currentStudent?.name || currentStudent?.username || "Student";
     const displayRole = currentStudent?.username || "Student";
+    const [showVerse, setShowVerse] = useState(true);
 
     return (
         <div className="king-theme">
@@ -181,11 +182,20 @@ function Landing({ currentStudent }: LandingProps) {
                         </div>
                     </nav>
 
-                    <div className="king-footer king-footer--inline">
-                        <p className="king-faith-verse king-faith-verse--compact king-faith-verse--green-fade">
-                            &quot;Let all that you do be done in love.&quot; <span>1 Corinthians 16:14</span>
-                        </p>
-                    </div>
+                    {showVerse ? (
+                        <div className="king-footer king-footer--inline">
+                            <p
+                                className="king-faith-verse king-faith-verse--compact king-faith-verse--green-fade"
+                                onAnimationEnd={(event) => {
+                                    if (event.animationName === "kingVerseGreenBorderFade") {
+                                        setShowVerse(false);
+                                    }
+                                }}
+                            >
+                                &quot;Let all that you do be done in love.&quot; <span>1 Corinthians 16:14</span>
+                            </p>
+                        </div>
+                    ) : null}
                 </div>
             </header>
 
@@ -202,7 +212,7 @@ function Landing({ currentStudent }: LandingProps) {
                                 <a className="king-cta king-cta--primary" href="#marketplace">
                                     Explore support marketplace
                                 </a>
-                                <a className="king-cta king-cta--secondary" href="#messages">
+                                <a className="king-cta king-cta--secondary" href="#posts">
                                     Open community messages
                                 </a>
                             </div>

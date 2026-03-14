@@ -4,6 +4,7 @@ import Landing from "./components/MainPage/Landing";
 import Login from "./components/Login";
 import MarketPlace from "./components/MainPage/MarketPlace";
 import Messages from "./components/MainPage/Messages";
+import Posts from "./components/MainPage/Posts";
 import Signup from "./components/Signup";
 import ForgotPassword from "./components/ForgotPassword";
 
@@ -17,6 +18,7 @@ type StudentProfile = {
 
 const getCurrentPage = () => {
     if (window.location.hash === "#home") return "home";
+    if (window.location.hash === "#posts") return "posts";
     if (window.location.hash === "#messages") return "messages";
     if (window.location.hash === "#marketplace") return "marketplace";
     if (window.location.hash === "#signup") return "signup";
@@ -40,6 +42,7 @@ function App() {
     }, []);
 
     if (page === "messages") return <Messages />;
+    if (page === "posts") return <Posts />;
     if (page === "marketplace") return <MarketPlace />;
     if (page === "signup") return <Signup />;
     if (page === "forgot-password") return <ForgotPassword />;
