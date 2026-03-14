@@ -76,38 +76,38 @@ type CategoryAccent = {
 };
 
 const notificationInk = "#0b1220";
-const notificationYellowTint = "rgba(250, 204, 21, 0.18)";
-const notificationYellowTintStrong = "rgba(250, 204, 21, 0.28)";
-const notificationYellowBorder = "rgba(250, 204, 21, 0.38)";
+const notificationBlueTint = "rgba(125, 211, 252, 0.2)";
+const notificationBlueTintStrong = "rgba(125, 211, 252, 0.34)";
+const notificationBlueBorder = "rgba(56, 189, 248, 0.36)";
 
 const categoryAccent: Record<NotificationCategory, CategoryAccent> = {
     Messages: {
         label: "Messages",
-        chipClassName: "bg-warning text-dark",
-        iconClassName: "bg-warning text-dark",
-        dotClassName: "bg-warning",
-        borderColor: "var(--bs-warning)",
+        chipClassName: "bg-info-subtle text-dark",
+        iconClassName: "bg-info-subtle text-dark",
+        dotClassName: "bg-info",
+        borderColor: "var(--bs-info)",
     },
     Marketplace: {
         label: "Marketplace",
-        chipClassName: "bg-warning text-dark",
-        iconClassName: "bg-warning text-dark",
-        dotClassName: "bg-warning",
-        borderColor: "var(--bs-warning)",
+        chipClassName: "bg-info-subtle text-dark",
+        iconClassName: "bg-info-subtle text-dark",
+        dotClassName: "bg-info",
+        borderColor: "var(--bs-info)",
     },
     Community: {
         label: "Community",
-        chipClassName: "bg-warning text-dark",
-        iconClassName: "bg-warning text-dark",
-        dotClassName: "bg-warning",
-        borderColor: "var(--bs-warning)",
+        chipClassName: "bg-info-subtle text-dark",
+        iconClassName: "bg-info-subtle text-dark",
+        dotClassName: "bg-info",
+        borderColor: "var(--bs-info)",
     },
     System: {
         label: "System",
-        chipClassName: "bg-warning text-dark",
-        iconClassName: "bg-warning text-dark",
-        dotClassName: "bg-warning",
-        borderColor: "var(--bs-warning)",
+        chipClassName: "bg-info-subtle text-dark",
+        iconClassName: "bg-info-subtle text-dark",
+        dotClassName: "bg-info",
+        borderColor: "var(--bs-info)",
     },
 };
 
@@ -225,7 +225,7 @@ function NotificationCenter({ unreadCount, items = defaultNotifications }: Notif
                     style={{
                         visibility: "visible",
                         background: "var(--king-paper)",
-                        borderLeft: `1px solid ${notificationYellowBorder}`,
+                        borderLeft: `1px solid ${notificationBlueBorder}`,
                         boxShadow: "var(--king-shadow)",
                         width: "min(420px, 92vw)",
                         borderTopLeftRadius: "22px",
@@ -238,8 +238,8 @@ function NotificationCenter({ unreadCount, items = defaultNotifications }: Notif
                         style={{
                             padding: "1.1rem 1.1rem 0.85rem",
                             background:
-                                `linear-gradient(180deg, rgba(255,255,255,0.98), ${notificationYellowTint})`,
-                            borderBottom: `1px solid ${notificationYellowBorder}`,
+                                `linear-gradient(180deg, rgba(255,255,255,0.98), ${notificationBlueTint})`,
+                            borderBottom: `1px solid ${notificationBlueBorder}`,
                         }}
                     >
                         <div className="d-flex align-items-center justify-content-between w-100 gap-3">
@@ -269,8 +269,8 @@ function NotificationCenter({ unreadCount, items = defaultNotifications }: Notif
                                     style={{
                                         padding: "0.95rem",
                                         borderRadius: "18px",
-                                        background: notificationYellowTint,
-                                        border: `1px solid ${notificationYellowBorder}`,
+                                        background: notificationBlueTint,
+                                        border: `1px solid ${notificationBlueBorder}`,
                                     }}
                                 >
                                     <div className="d-flex align-items-start gap-3">
@@ -314,8 +314,8 @@ function NotificationCenter({ unreadCount, items = defaultNotifications }: Notif
                                                     type="button"
                                                     className="btn btn-sm"
                                                     style={{
-                                                        borderColor: notificationYellowBorder,
-                                                        background: notificationYellowTint,
+                                                        borderColor: notificationBlueBorder,
+                                                        background: notificationBlueTint,
                                                         color: notificationInk,
                                                     }}
                                                     onClick={() => setSelectedNotificationId(null)}
@@ -327,8 +327,8 @@ function NotificationCenter({ unreadCount, items = defaultNotifications }: Notif
                                                         type="button"
                                                         className="btn btn-sm"
                                                         style={{
-                                                            borderColor: notificationYellowBorder,
-                                                            background: notificationYellowTintStrong,
+                                                            borderColor: notificationBlueBorder,
+                                                            background: notificationBlueTintStrong,
                                                             color: notificationInk,
                                                             fontWeight: 700,
                                                         }}
@@ -360,8 +360,8 @@ function NotificationCenter({ unreadCount, items = defaultNotifications }: Notif
                                         type="button"
                                         className="btn"
                                         style={{
-                                            borderColor: notificationYellowBorder,
-                                            background: notificationYellowTint,
+                                            borderColor: notificationBlueBorder,
+                                            background: notificationBlueTint,
                                             color: notificationInk,
                                             boxShadow: unreadOnly ? undefined : `inset 0 0 0 2px ${notificationInk}`,
                                         }}
@@ -373,8 +373,8 @@ function NotificationCenter({ unreadCount, items = defaultNotifications }: Notif
                                         type="button"
                                         className="btn"
                                         style={{
-                                            borderColor: notificationYellowBorder,
-                                            background: notificationYellowTint,
+                                            borderColor: notificationBlueBorder,
+                                            background: notificationBlueTint,
                                             color: notificationInk,
                                             boxShadow: unreadOnly ? `inset 0 0 0 2px ${notificationInk}` : undefined,
                                         }}
@@ -489,9 +489,9 @@ function NotificationCenter({ unreadCount, items = defaultNotifications }: Notif
                                                                  borderLeft: `4px solid ${categoryAccent[item.category].borderColor}`,
                                                                   background:
                                                                       item.id === selectedNotificationId
-                                                                          ? notificationYellowTintStrong
+                                                                          ? notificationBlueTintStrong
                                                                           : item.unread
-                                                                              ? notificationYellowTint
+                                                                              ? notificationBlueTint
                                                                               : undefined,
                                                               }}
                                                               onClick={() => setSelectedNotificationId(item.id)}
@@ -586,9 +586,9 @@ function NotificationCenter({ unreadCount, items = defaultNotifications }: Notif
                                                     borderLeft: `4px solid ${categoryAccent[item.category].borderColor}`,
                                                     background:
                                                         item.id === selectedNotificationId
-                                                            ? notificationYellowTintStrong
+                                                            ? notificationBlueTintStrong
                                                             : item.unread
-                                                                ? notificationYellowTint
+                                                                ? notificationBlueTint
                                                                 : undefined,
                                                 }}
                                                 onClick={() => setSelectedNotificationId(item.id)}
