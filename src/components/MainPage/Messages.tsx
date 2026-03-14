@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Notification from "../Notification";
 import Title from "../Title";
 import SiteFooter from "./SiteFooter";
@@ -24,6 +24,8 @@ interface Conversation {
     course: string;
     messages: MessageItem[];
 }
+
+const pendingGroupChatKey = "connect:pendingGroupChat";
 
 const navigationItems = [
     { label: "Home", href: "#home" },
@@ -92,9 +94,72 @@ const supportCards = [
     },
 ];
 
+type PendingGroupChat = {
+    discussionId: number;
+    title: string;
+    detail?: string;
+};
+
+const readPendingGroupChat = (): PendingGroupChat | null => {
+    if (typeof window === "undefined") return null;
+    try {
+        const raw = sessionStorage.getItem(pendingGroupChatKey);
+        if (!raw) return null;
+        return JSON.parse(raw) as PendingGroupChat;
+    } catch {
+        return null;
+    }
+};
+
+const buildAccent = (title: string) => {
+    const letters = title
+        .split(/\s+/)
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((word) => word[0]?.toUpperCase())
+        .join("");
+    return letters || "GC";
+};
+
 function Messages() {
-    const [threadList, setThreadList] = useState(initialConversations);
-    const [activeConversationId, setActiveConversationId] = useState(initialConversations[0].id);
+    const pendingGroupChat = readPendingGroupChat();
+    const pendingConversationId = pendingGroupChat ? 1_000_000_000 + pendingGroupChat.discussionId : null;
+
+    const [threadList, setThreadList] = useState(() => {
+        if (!pendingGroupChat || pendingConversationId === null) return initialConversations;
+        const groupConversation: Conversation = {
+            id: pendingConversationId,
+            name: pendingGroupChat.title,
+            role: "Forum group chat",
+            status: "Active now",
+            unread: 0,
+            accent: buildAccent(pendingGroupChat.title),
+            summary: "Welcome to the forum group chat.",
+            course: "Forum",
+            messages: [
+                {
+                    id: 1,
+                    author: "other",
+                    text: `Group chat created for: ${pendingGroupChat.title}`,
+                    time: "Just now",
+                },
+                ...(pendingGroupChat.detail
+                    ? [
+                        {
+                            id: 2,
+                            author: "other" as const,
+                            text: pendingGroupChat.detail,
+                            time: "Just now",
+                        },
+                    ]
+                    : []),
+            ],
+        };
+
+        return [groupConversation, ...initialConversations];
+    });
+
+    const [activeConversationId, setActiveConversationId] = useState(() => pendingConversationId ?? initialConversations[0].id);
     const [draft, setDraft] = useState("");
 
     const activeConversation = useMemo(
@@ -103,6 +168,15 @@ function Messages() {
     );
 
     const totalUnread = threadList.reduce((count, conversation) => count + conversation.unread, 0);
+
+    useEffect(() => {
+        if (!pendingGroupChat) return;
+        try {
+            sessionStorage.removeItem(pendingGroupChatKey);
+        } catch {
+            // ignore
+        }
+    }, []);
 
     const handleSend = () => {
         const trimmedDraft = draft.trim();

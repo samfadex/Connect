@@ -21,17 +21,8 @@ type SharedPageHeaderProps = {
     searchPlaceholder: string;
     notificationCount: string | number;
     searchClassName?: string;
-    faculties?: DropdownItem[];
     moreItems?: DropdownItem[];
 };
-
-const defaultFaculties: DropdownItem[] = [
-    { label: "Arts", href: "#faculties" },
-    { label: "Science", href: "#faculties" },
-    { label: "Business", href: "#faculties" },
-    { label: "Education", href: "#faculties" },
-    { label: "Music", href: "#faculties" },
-];
 
 const defaultMoreItems: DropdownItem[] = [
     { label: "About", href: "#" },
@@ -49,7 +40,6 @@ function SharedPageHeader({
     searchPlaceholder,
     notificationCount,
     searchClassName,
-    faculties = defaultFaculties,
     moreItems = defaultMoreItems,
 }: SharedPageHeaderProps) {
     const navRef = useRef<HTMLElement | null>(null);
@@ -125,19 +115,6 @@ function SharedPageHeader({
                         ))}
 
                         <NotificationCenter unreadCount={notificationCount} />
-
-                        <details className="king-nav-dropdown">
-                            <summary className="king-nav-link king-nav-dropdown__toggle">
-                                <span>Faculties</span>
-                            </summary>
-                            <div className="king-nav-dropdown__menu">
-                                {faculties.map((faculty) => (
-                                    <a key={faculty.label} className="king-nav-dropdown__item" href={faculty.href} onClick={closeDropdowns}>
-                                        {faculty.label}
-                                    </a>
-                                ))}
-                            </div>
-                        </details>
 
                         <details className="king-nav-dropdown">
                             <summary className="king-nav-link king-nav-dropdown__toggle">

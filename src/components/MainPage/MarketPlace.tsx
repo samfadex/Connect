@@ -48,14 +48,6 @@ const navigationItems = [
     { label: "Marketplace", href: "#marketplace", active: true },
 ];
 
-const faculties = [
-    "Arts",
-    "Science",
-    "Business",
-    "Education",
-    "Music",
-];
-
 const moreItems = [
     { label: "About", href: "#" },
     { label: "Campus Map", href: "https://www.kingsu.ca/campus-life/campus-map" },
@@ -287,19 +279,6 @@ function MarketPlace() {
                             ))}
 
                             <NotificationCenter unreadCount={3} />
-
-                            <details className="king-nav-dropdown">
-                                <summary className="king-nav-link king-nav-dropdown__toggle">
-                                    <span>Faculties</span>
-                                </summary>
-                                <div className="king-nav-dropdown__menu">
-                                    {faculties.map((faculty) => (
-                                        <a key={faculty} className="king-nav-dropdown__item" href="#">
-                                            {faculty}
-                                        </a>
-                                    ))}
-                                </div>
-                            </details>
 
                             <details className="king-nav-dropdown">
                                 <summary className="king-nav-link king-nav-dropdown__toggle">

@@ -20,7 +20,6 @@ type LandingProps = {
 
 const navigationItems = [
     { label: "Home", href: "#home", active: true },
-    { label: "Faculties", href: "#faculties" },
     { label: "Posts", href: "#posts", badge: "5" },
     { label: "Chat", href: "#messages", badge: "12" },
     { label: "Marketplace", href: "#marketplace" },
