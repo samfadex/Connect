@@ -91,7 +91,7 @@ const handlePost = (value: string) => {
     };
 
 function Landing({ currentStudent }: LandingProps) {
-    const displayName = currentStudent?.name || currentStudent?.username || "Student";
+    const displayName = currentStudent?.name || currentStudent?.username || "David Spacerocket";
     const displayRole = currentStudent ? "3rd year student" : "Guest student";
     const [showVerse, setShowVerse] = useState(true);
 

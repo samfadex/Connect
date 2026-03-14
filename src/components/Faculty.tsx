@@ -126,7 +126,7 @@ const facultyGroups: FacultyGroup[] = [
 ];
 
 function Faculty({ currentStudent }: FacultyProps) {
-    const displayName = currentStudent?.name || currentStudent?.username || "Student";
+    const displayName = currentStudent?.name || currentStudent?.username || "Sam Fadex";
     const displayRole = currentStudent ? "3rd year student" : "Guest student";
 
     return (

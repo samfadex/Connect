@@ -37,7 +37,7 @@ const navigationItems = [
 const initialConversations: Conversation[] = [
     {
         id: 1,
-        name: "Ava Thompson",
+        name: "Sam Fadex",
         role: "Biology study partner",
         status: "Active now",
         unread: 2,
@@ -52,7 +52,7 @@ const initialConversations: Conversation[] = [
     },
     {
         id: 2,
-        name: "Jordan Lee",
+        name: "Dayana Mon Jerry",
         role: "Residence floor group",
         status: "Away",
         unread: 0,
@@ -66,7 +66,7 @@ const initialConversations: Conversation[] = [
     },
     {
         id: 3,
-        name: "Maya Chen",
+        name: "Stella Tom",
         role: "Classmate",
         status: "In class",
         unread: 5,
@@ -235,7 +235,7 @@ function Messages() {
                         ? { ...item, badge: totalUnread > 0 ? (totalUnread > 99 ? "99+" : totalUnread) : undefined }
                         : item
                 )}
-                profileName="Sarah Kim"
+                profileName="David Spacerocket"
                 profileStatus="Student"
                 searchPlaceholder="Search conversations or classmates"
                 searchClassName="king-search--compact"

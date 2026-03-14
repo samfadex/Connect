@@ -251,7 +251,7 @@ function MarketPlace() {
                                 </svg>
                             </span>
                             <span className="king-profile-chip__copy">
-                                <strong>Sarah Kim</strong>
+                                <strong>Dayana Mon Jerry</strong>
                                 <small>Student</small>
                             </span>
                         </div>

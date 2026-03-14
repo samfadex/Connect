@@ -122,7 +122,7 @@ function ClickableCard({ title, initialValue = "", onPost, onLike, onShare }: Cl
                         <div className="king-composer-preview">
                             <p className="king-side-panel__label mb-2">Preview</p>
                             <p className="mb-2 fw-semibold king-preview-title">You are posting to {audience}</p>
-                            <p className="mb-0 text-muted">
+                            <p className="mb-0 text-muted king-preview-copy">
                                 {value.trim() || "Your post preview will appear here as you type."}
                             </p>
                         </div>
