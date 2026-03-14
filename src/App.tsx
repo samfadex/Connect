@@ -5,18 +5,30 @@ import Login from "./components/Login";
 import MarketPlace from "./components/MainPage/MarketPlace";
 import Messages from "./components/MainPage/Messages";
 import Signup from "./components/Signup";
+import ForgotPassword from "./components/ForgotPassword";
+
+type StudentProfile = {
+    id: number;
+    name: string | null;
+    schoolEmail: string | null;
+    username: string | null;
+    studentId: number | null;
+};
 
 const getCurrentPage = () => {
+    if (window.location.hash === "#home") return "home";
     if (window.location.hash === "#messages") return "messages";
     if (window.location.hash === "#marketplace") return "marketplace";
     if (window.location.hash === "#signup") return "signup";
     if (window.location.hash === "#login") return "login";
-    return "home";
+    if (window.location.hash === "#forgot-password") return "forgot-password";
+    return "login";
 };
 
 
 function App() {
     const [page, setPage] = useState(getCurrentPage);
+    const [currentStudent, setCurrentStudent] = useState<StudentProfile | null>(null);
 
     useEffect(() => {
         const handleHashChange = () => {
@@ -30,8 +42,10 @@ function App() {
     if (page === "messages") return <Messages />;
     if (page === "marketplace") return <MarketPlace />;
     if (page === "signup") return <Signup />;
-    if (page === "login") return <Login />;
-    return <Landing />;
+    if (page === "forgot-password") return <ForgotPassword />;
+    if (page === "login") return <Login onLoginSuccess={setCurrentStudent} />;
+    if (page === "home") return <Landing currentStudent={currentStudent} />;
+    return <Landing currentStudent={currentStudent} />;
 }
 
 export default App;

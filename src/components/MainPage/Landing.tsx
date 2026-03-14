@@ -1,6 +1,19 @@
 import ClickableCard from "../ClickableCard";
 import Title from "../Title";
 import Notification from "../Notification";
+import ConnectLogo from "../ConnectLogo";
+
+type StudentProfile = {
+    id: number;
+    name: string | null;
+    schoolEmail: string | null;
+    username: string | null;
+    studentId: number | null;
+};
+
+type LandingProps = {
+    currentStudent: StudentProfile | null;
+};
 
 const navigationItems = [
     { label: "Home", href: "#home", active: true },
@@ -39,16 +52,10 @@ const quickLinks = [
     {
         kicker: "Community sharing",
         title: "Share What You Can",
-        description: "Offer items, time, or academic support so fewer students have to face a hard week alone.",
+        description: "Offer items or support to classmates.",
         action: "Offer support",
         href: "#marketplace",
     },
-];
-
-const campusHighlights = [
-    "Students can borrow, share, or request essentials instead of quietly going without them.",
-    "Peer-to-peer support keeps useful items in circulation and reduces waste across campus.",
-    "Messaging and community posts make it easier to respond quickly when someone needs help.",
 ];
 
 const campusForum = [
@@ -100,18 +107,17 @@ const handlePost = (value: string) => {
         console.log("Post shared");
     };
 
-function Landing() {
+function Landing({ currentStudent }: LandingProps) {
+    const displayName = currentStudent?.name || currentStudent?.username || "Student";
+    const displayRole = currentStudent?.username || "Student";
+
     return (
         <div className="king-theme">
             <header className="king-header">
                 <div className="king-shell">
                     <div className="king-topbar">
                         <div className="king-header__brand">
-                            <div className="king-brand-copy">
-                                <p className="king-eyebrow">The</p>
-                                <h1 className="king-wordmark">King&apos;s</h1>
-                                <p className="king-wordmark-subtitle">University</p>
-                            </div>
+                            <ConnectLogo className="connect-login-brand--header" eyebrow="Campus Network" name="CONNECT" />
                         </div>
 
                         <div className="king-topbar__actions">
@@ -123,8 +129,8 @@ function Landing() {
                                     </svg>
                                 </span>
                                 <span className="king-profile-chip__copy">
-                                    <strong>Sarah Kim</strong>
-                                    <small>Student</small>
+                                    <strong>{displayName}</strong>
+                                    <small>{displayRole}</small>
                                 </span>
                             </div>
                         </div>
@@ -174,6 +180,12 @@ function Landing() {
                             <input className="king-search" placeholder="Search posts, groups, or people" />
                         </div>
                     </nav>
+
+                    <div className="king-footer king-footer--inline">
+                        <p className="king-faith-verse king-faith-verse--compact king-faith-verse--green-fade">
+                            &quot;Let all that you do be done in love.&quot; <span>1 Corinthians 16:14</span>
+                        </p>
+                    </div>
                 </div>
             </header>
 
@@ -194,31 +206,30 @@ function Landing() {
                                     Open community messages
                                 </a>
                             </div>
+
+                            <section className="king-impact-strip king-impact-strip--compact">
+                                {impactMetrics.map((metric) => (
+                                    <article key={metric.label} className="king-impact-card king-impact-card--compact">
+                                        <div className="king-impact-card__value">
+                                            <strong>{metric.value}</strong>
+                                        </div>
+                                        <div className="king-impact-card__copy">
+                                            <span>{metric.label}</span>
+                                            <small>{metric.detail}</small>
+                                        </div>
+                                    </article>
+                                ))}
+                            </section>
                         </div>
                         <aside className="king-highlight-card">
                             <p className="king-side-panel__label">King&apos;s Connect identity</p>
                             <div className="king-brand-map">
                                 <div className="king-brand-map__logo">
-                                    <div className="king-connect-logo" aria-hidden="true">
-                                        <svg viewBox="0 0 120 120" fill="none">
-                                            <defs>
-                                                <linearGradient id="kingConnectGradient" x1="22" y1="18" x2="96" y2="98" gradientUnits="userSpaceOnUse">
-                                                    <stop stopColor="#93C5FD" />
-                                                    <stop offset="1" stopColor="#1D4ED8" />
-                                                </linearGradient>
-                                            </defs>
-                                            <rect x="14" y="14" width="92" height="92" rx="28" fill="url(#kingConnectGradient)" />
-                                            <path d="M43 33V87" stroke="#EFF6FF" strokeWidth="10" strokeLinecap="round" />
-                                            <path d="M46 60L78 34" stroke="#EFF6FF" strokeWidth="10" strokeLinecap="round" />
-                                            <path d="M46 61L80 86" stroke="#EFF6FF" strokeWidth="10" strokeLinecap="round" />
-                                            <circle cx="84" cy="34" r="7" fill="#DBEAFE" />
-                                            <circle cx="84" cy="86" r="7" fill="#DBEAFE" />
-                                        </svg>
-                                    </div>
-                                    <div className="king-brand-map__logo-copy">
-                                        <strong>King&apos;s Connect</strong>
-                                        <span>Campus support, designed for good</span>
-                                    </div>
+                                    <ConnectLogo
+                                        className="connect-login-brand--map"
+                                        eyebrow="Campus support, designed for good"
+                                        name="King&apos;s Connect"
+                                    />
                                 </div>
 
                                 <div className="king-brand-map__forum">
@@ -236,52 +247,7 @@ function Landing() {
                                     </div>
                                 </div>
 
-                                <div className="king-brand-map__canvas" aria-label="Map graphic of Alberta with Edmonton highlighted">
-                                    <svg viewBox="0 0 320 220" fill="none">
-                                        <path
-                                            d="M96 28L205 28L220 54L237 65L230 90L246 117L228 147L232 184L156 192L93 176L80 141L69 97L81 72L96 28Z"
-                                            fill="rgba(255,255,255,0.72)"
-                                            stroke="rgba(1,43,92,0.22)"
-                                            strokeWidth="4"
-                                        />
-                                        <path
-                                            d="M108 52H198M104 86H214M100 120H206M112 154H198"
-                                            stroke="rgba(1,43,92,0.16)"
-                                            strokeWidth="4"
-                                            strokeLinecap="round"
-                                        />
-                                        <path
-                                            d="M100 74L213 74M105 109L219 109M96 143L206 143"
-                                            stroke="rgba(59,130,246,0.14)"
-                                            strokeWidth="4"
-                                            strokeLinecap="round"
-                                        />
-                                        <path
-                                            d="M185 90C185 104 165 120 159 126C153 120 133 104 133 90C133 76 144 66 159 66C174 66 185 76 185 90Z"
-                                            fill="#1D4ED8"
-                                        />
-                                        <circle cx="159" cy="89" r="11" fill="#DBEAFE" />
-                                        <path d="M185 89H258" stroke="#012B5C" strokeWidth="4" strokeLinecap="round" />
-                                        <rect x="214" y="66" width="82" height="46" rx="16" fill="#012B5C" />
-                                        <text x="228" y="86" fill="#EFF6FF" fontSize="14" fontWeight="700">Edmonton</text>
-                                        <text x="228" y="101" fill="#D7E8FA" fontSize="11">King&apos;s University</text>
-                                    </svg>
-                                </div>
-
-                                <div className="king-brand-map__location">
-                                    <span className="king-brand-map__pin">Edmonton, Alberta</span>
-                                    <h3>Built around King&apos;s University and the students who make it home.</h3>
-                                    <p>
-                                        This concept ties the platform directly to place, showing a campus community rooted in Edmonton and connected through practical care.
-                                    </p>
-                                </div>
                             </div>
-
-                            <ul className="king-side-panel__list">
-                                {campusHighlights.map((item) => (
-                                    <li key={item}>{item}</li>
-                                ))}
-                            </ul>
                         </aside>
                     </div>
                 </section>
@@ -292,23 +258,9 @@ function Landing() {
                             <div className="king-resource-card__copy">
                                 <p className="king-resource-card__kicker">{link.kicker}</p>
                                 <h3>{link.title}</h3>
-                                <p>{link.description}</p>
+                                {link.description ? <p>{link.description}</p> : null}
                             </div>
                             <a href={link.href} className="king-resource-link">{link.action}</a>
-                        </article>
-                    ))}
-                </section>
-
-                <section className="king-impact-strip">
-                    {impactMetrics.map((metric) => (
-                        <article key={metric.label} className="king-impact-card">
-                            <div className="king-impact-card__value">
-                                <strong>{metric.value}</strong>
-                            </div>
-                            <div className="king-impact-card__copy">
-                                <span>{metric.label}</span>
-                                <small>{metric.detail}</small>
-                            </div>
                         </article>
                     ))}
                 </section>
@@ -347,7 +299,7 @@ function Landing() {
 
                         <aside className="king-side-panel king-side-panel--compact">
                             <p className="king-side-panel__label">At a glance</p>
-                            <div className="king-stat-list">
+                            <div className="king-stat-list mt-3">
                                 <div>
                                     <strong>18</strong>
                                     <span>needs posted</span>
@@ -364,12 +316,6 @@ function Landing() {
                         </aside>
                         </div>
                     </div>
-                </div>
-
-                <div className="king-footer">
-                    <p className="king-faith-verse">
-                        &quot;Let all that you do be done in love.&quot; <span>1 Corinthians 16:14</span>
-                    </p>
                 </div>
 
                 <Notification message="General Chat has " number={5} color="dark" />

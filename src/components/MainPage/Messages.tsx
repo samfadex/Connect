@@ -249,11 +249,14 @@ function Messages() {
                     <aside className="king-message-list">
                         <div className="king-message-list__header">
                             <div>
-                                <p className="king-side-panel__label">Conversations</p>
-                                <h3>Recent threads</h3>
+                                <h3>Chats</h3>
                             </div>
-                            <button type="button" className="king-cta king-cta--secondary king-message-list__button">
-                                New message
+                            <button
+                                type="button"
+                                className="king-cta king-cta--secondary king-message-list__button king-message-list__button--compact"
+                                aria-label={`${totalUnread} unread messages`}
+                            >
+                                {totalUnread}
                             </button>
                         </div>
 

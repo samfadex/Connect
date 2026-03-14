@@ -1,2 +1,5 @@
 node_modules
 src/App.tsx
+# Environment files
+.env
+.env.local

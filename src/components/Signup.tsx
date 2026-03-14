@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import ConnectLogo from "./ConnectLogo";
+import { supabase } from "../lib/supabase";
 
 function Signup() {
 
@@ -8,6 +10,8 @@ function Signup() {
     email: "",
     password: ""
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -16,9 +20,35 @@ function Signup() {
     });
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("Form Data:", formData);
+    setStatusMessage("");
+    setIsSubmitting(true);
+
+    const payload = {
+      name: formData.fullName,
+      studentId: formData.studentID ? Number(formData.studentID) : null,
+      schoolEmail: formData.email,
+      username: formData.email ? formData.email.split("@")[0] : null,
+      password: formData.password,
+    };
+
+    const { error } = await supabase.from("Student").insert(payload);
+
+    if (error) {
+      setStatusMessage(`Signup failed: ${error.message}`);
+      setIsSubmitting(false);
+      return;
+    }
+
+    setStatusMessage("Signup successful. You can login now.");
+    setFormData({
+      fullName: "",
+      studentID: "",
+      email: "",
+      password: ""
+    });
+    setIsSubmitting(false);
   };
 
   return (
@@ -26,7 +56,8 @@ function Signup() {
       <div className="row justify-content-center">
         <div className="col-md-5">
 
-          <div className="card p-4 shadow">
+          <div className="card p-4 shadow auth-card">
+            <ConnectLogo className="mb-4" />
             <h3 className="text-center mb-4">Student Signup</h3>
 
             <form onSubmit={handleSubmit}>
@@ -91,12 +122,15 @@ function Signup() {
                 />
               </div>
 
-              <button type="submit" className="btn btn-primary w-100">
+              <button type="submit" className="btn btn-primary w-100" disabled={isSubmitting}>
                 Sign Up
               </button>
-              {/* <p className="text-center mt-3">
-  Already have an account? <Link to="/login">Login here</Link>
-</p> */}
+              {statusMessage ? (
+                <p className="text-center mt-3 mb-1">{statusMessage}</p>
+              ) : null}
+              <p className="text-end mt-3 mb-1">
+                Already have an account? <a href="#login">Login</a>
+              </p>
 
             </form>
           </div>

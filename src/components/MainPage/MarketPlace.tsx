@@ -24,6 +24,7 @@ interface Listing {
 const navigationItems = [
     { label: "Home", href: "#home" },
     { label: "Posts", href: "#" },
+    { label: "Course Forum", href: "#" },
     { label: "Messages", href: "#messages", badge: "12" },
     { label: "Marketplace", href: "#marketplace", active: true },
     { label: "General Chat", href: "#", badge: "5" },
@@ -239,7 +240,7 @@ function MarketPlace() {
                                     href={item.href}
                                 >
                                     <span>{item.label}</span>
-                                    {item.badge ? <span className="badge bg-warning text-dark">{item.badge}</span> : null}
+                                    {item.badge ? <span className="badge king-post-badge">{item.badge}</span> : null}
                                 </a>
                             ))}
 
